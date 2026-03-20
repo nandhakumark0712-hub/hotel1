@@ -125,7 +125,7 @@ const Register = ({ role: initialRole }) => {
                 />
               </div>
               <p className="mt-2 text-[11px] text-gray-500 leading-tight">
-                Must be at least 8 characters with uppercase, lowercase, numbers & special characters.
+                Must be at least 8 characters with both letters and numbers.
               </p>
             </div>
 
