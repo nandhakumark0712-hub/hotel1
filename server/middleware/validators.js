@@ -31,8 +31,8 @@ const validateRegister = [
     body('password')
         .notEmpty().withMessage('Password is required')
         .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+\-=[\]{};':"\\|,.<>/?])/)
-        .withMessage('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'),
+        .matches(/^(?=.*[a-z])(?=.*\d)/)
+        .withMessage('Password must contain both letters and numbers'),
     handleValidationErrors
 ];
 
@@ -61,8 +61,8 @@ const validateResetPassword = [
     body('password')
         .notEmpty().withMessage('Password is required')
         .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+\-=[\]{};':"\\|,.<>/?])/)
-        .withMessage('Password must contain uppercase, lowercase, a number, and a special character'),
+        .matches(/^(?=.*[a-z])(?=.*\d)/)
+        .withMessage('Password must contain both letters and numbers'),
     handleValidationErrors
 ];
 
