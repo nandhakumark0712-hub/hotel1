@@ -1,6 +1,17 @@
 {
+  "name": "hotal-bokking",
+  "version": "1.0.0",
+  "description": "Hotel Booking Application",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "npm start --prefix server",
+    "server": "npm start --prefix server",
+    "server:dev": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "npm run server:dev"
+  },
   "dependencies": {
-    "cloudinary": "^1.30.0",
-    "multer-storage-cloudinary": "^4.0.0"
+    "cloudinary": "1.41.3",
+    "multer-storage-cloudinary": "4.0.0"
   }
 }
