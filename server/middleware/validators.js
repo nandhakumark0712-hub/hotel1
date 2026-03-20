@@ -4,9 +4,10 @@ const { validationResult, body, param, query } = require('express-validator');
 const handleValidationErrors = (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        const errorDetails = errors.array().map(err => `${err.msg}`).join(', ');
         return res.status(422).json({
             success: false,
-            message: 'Validation failed',
+            message: `Validation failed: ${errorDetails}`,
             errors: errors.array().map(err => ({
                 field: err.path,
                 message: err.msg,
@@ -30,9 +31,7 @@ const validateRegister = [
         .normalizeEmail(),
     body('password')
         .notEmpty().withMessage('Password is required')
-        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
-        .matches(/^(?=.*[a-z])(?=.*\d)/)
-        .withMessage('Password must contain both letters and numbers'),
+        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
     handleValidationErrors
 ];
 
@@ -60,9 +59,7 @@ const validateForgotPassword = [
 const validateResetPassword = [
     body('password')
         .notEmpty().withMessage('Password is required')
-        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
-        .matches(/^(?=.*[a-z])(?=.*\d)/)
-        .withMessage('Password must contain both letters and numbers'),
+        .isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
     handleValidationErrors
 ];
 
