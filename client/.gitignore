@@ -26,3 +26,14 @@ dist-ssr
 server/.env
 build
 
+# root
+.env
+
+# backend
+server/node_modules/
+server/.env
+
+# frontend
+src/node_modules/
+src/.env
+src/dist/
