@@ -41,7 +41,7 @@ let socketInstance = null;
 
 const getSocket = () => {
   if (!socketInstance) {
-    socketInstance = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000', {
+    socketInstance = io(import.meta.env.VITE_SOCKET_URL || '', {
       autoConnect: false,
       transports: ['websocket'],
     });

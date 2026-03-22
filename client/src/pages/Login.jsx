@@ -64,7 +64,7 @@ const Login = ({ role: initialRole }) => {
   };
 
   const handleSocialLogin = (provider) => {
-    const backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const backendUrl = import.meta.env.VITE_API_URL || '';
     const path = provider === 'google' ? `/auth/${provider}` : `/api/oauth/${provider}`;
     window.location.href = `${backendUrl}${path}`;
   };

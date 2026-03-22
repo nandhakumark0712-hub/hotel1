@@ -1,5 +1,9 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/api/(.*)", "destination": "https://hotel1-822f.onrender.com/api/$1" },
+    { "source": "/auth/(.*)", "destination": "https://hotel1-822f.onrender.com/auth/$1" },
+    { "source": "/uploads/(.*)", "destination": "https://hotel1-822f.onrender.com/uploads/$1" },
+    { "source": "/socket.io/(.*)", "destination": "https://hotel1-822f.onrender.com/socket.io/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
