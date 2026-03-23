@@ -184,3 +184,31 @@ exports.promotionalTemplate = ({ title, discount, offerLink, message, hotelName 
 </body>
 </html>
 `;
+
+// ── Login Notification Template ─────────────────────────────────────────────
+exports.loginEmailTemplate = ({ userName, loginTime }) => `
+<!DOCTYPE html>
+<html>
+<body style="font-family: sans-serif; color: #333; line-height: 1.6; padding: 20px;">
+    <div style="max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+        <div style="background: #2D3748; color: white; padding: 20px; text-align: center;">
+            <h2 style="margin: 0;">New Security Alert</h2>
+        </div>
+        <div style="padding: 30px;">
+            <p>Hello ${userName || 'User'},</p>
+            <p>Your <strong>NK Hotel Bookings</strong> account was just logged in to.</p>
+            
+            <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin: 24px 0; border: 1px solid #e2e8f0;">
+                <div style="font-size: 14px; font-weight: 700; color: #64748b; margin-bottom: 5px;">TIME</div>
+                <div style="font-weight: 800; color: #1e293b; margin-bottom: 20px;">${loginTime}</div>
+                
+                <div style="font-size: 14px; font-weight: 700; color: #64748b; margin-bottom: 5px;">ACCOUNT</div>
+                <div style="font-weight: 800; color: #1e293b;">${userName}</div>
+            </div>
+
+            <p style="font-size: 14px; color: #64748b;">If this was you, you can safely ignore this email. If not, please change your password immediately.</p>
+        </div>
+    </div>
+</body>
+</html>
+`;

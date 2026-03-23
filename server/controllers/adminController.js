@@ -3,7 +3,7 @@ const Hotel = require('../models/Hotel');
 const Booking = require('../models/Booking');
 const Review = require('../models/Review');
 const Promotion = require('../models/Promotion');
-const { createNotification } = require('../utils/notificationService');
+const { createNotification, sendPromotionToAll } = require('../utils/notificationService');
 
 const getIO = () => {
     try { return require('../server').io; } catch { return null; }
@@ -20,13 +20,9 @@ exports.sendPromotionalOffer = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Message content is required' });
         }
 
-        let recipients = [];
-        if (userId) {
-            const user = await User.findById(userId);
-            if (user) recipients.push(user);
-        } else {
-            recipients = await User.find({ role: 'customer' });
-        }
+        // The logic below for individually selecting users is kept only if we ever want to target specific userIds
+        // But the requirement currently says send to all registered/logged in customers
+        // So we will ignore userId if provided for now for "Promotional Offers" per the new requirement.
 
         // 3. Save officially to Promotion model for the Landing Page
         await Promotion.create({
@@ -54,28 +50,18 @@ exports.sendPromotionalOffer = async (req, res) => {
             }
         }
 
-        const notificationPromises = recipients.map(user => 
-            createNotification(getIO(), {
-                userId: user._id.toString(),
-                type: 'PROMO_OFFER',
-                message: message,
-                userEmail: user.email,
-                userName: user.name,
-                metadata: {
-                    title: title || 'Special Offer',
-                    discount: discount || '10',
-                    message: message,
-                    hotelName: hotelName,
-                    offerLink: offerLink || (process.env.CLIENT_URL || 'http://localhost:5173')
-                }
-            })
-        );
-
-        await Promise.all(notificationPromises);
+        // 5. Broadcast notifications & emails to all customers
+        const result = await sendPromotionToAll(getIO(), {
+            title: title || 'Special Offer',
+            discount: discount || '10',
+            message: message,
+            hotelName: hotelName,
+            offerLink: offerLink || (process.env.CLIENT_URL || 'http://localhost:5173')
+        });
 
         res.json({ 
             success: true, 
-            message: `Promotional offer sent to ${recipients.length} users.` 
+            message: `Promotional offer has been broadcast to all customers successfully.` 
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

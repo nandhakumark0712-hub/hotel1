@@ -4,8 +4,10 @@ const {
     bookingConfirmationTemplate, 
     paymentConfirmationTemplate, 
     cancellationTemplate, 
-    promotionalTemplate 
+    promotionalTemplate,
+    loginEmailTemplate
 } = require('./emailTemplates');
+const User = require('../models/User');
 
 /**
  * createNotification
@@ -40,6 +42,13 @@ const createNotification = async (io, { userId, type, message, userEmail, userNa
             let subject = getEmailSubject(type);
 
             switch (type) {
+                case 'LOGIN':
+                    html = loginEmailTemplate({
+                        userName,
+                        loginTime: metadata.loginTime || new Date().toLocaleString('en-IN')
+                    });
+                    subject = '🔔 Security Alert: New Login - NK Hotel Bookings';
+                    break;
                 case 'BOOKING_CONFIRMED':
                     html = bookingConfirmationTemplate({
                         userName,
@@ -94,6 +103,7 @@ const createNotification = async (io, { userId, type, message, userEmail, userNa
 
 const getEmailSubject = (type) => {
     const subjects = {
+        LOGIN: '🔔 Account Login Notification — NK Hotel Bookings',
         BOOKING_CONFIRMED: '🏨 Your Booking is Confirmed — NK Hotel Bookings',
         PAYMENT_CONFIRMED: '✅ Payment Received — NK Hotel Bookings',
         BOOKING_CANCELLED: '❌ Booking Cancellation — NK Hotel Bookings',
@@ -103,4 +113,32 @@ const getEmailSubject = (type) => {
     return subjects[type] || subjects.SYSTEM;
 };
 
-module.exports = { createNotification };
+/**
+ * sendPromotionToAll
+ * Sends a promotional email to all registered customers
+ */
+const sendPromotionToAll = async (io, { title, discount, message, hotelName, offerLink }) => {
+    try {
+        const customers = await User.find({ role: 'customer' }).select('email name _id');
+        console.log(`[NotificationService] Sending promo to ${customers.length} customers...`);
+
+        const promoPromises = customers.map(customer => 
+            createNotification(io, {
+                userId: customer._id,
+                type: 'PROMO_OFFER',
+                message: `🎉 ${title}: Get ${discount}% OFF at ${hotelName || 'our selected hotels'}!`,
+                userEmail: customer.email,
+                userName: customer.name,
+                metadata: { title, discount, message, hotelName, offerLink }
+            })
+        );
+
+        await Promise.allSettled(promoPromises);
+        return { success: true, count: customers.length };
+    } catch (err) {
+        console.error('[NotificationService] Broadcast Error:', err.message);
+        throw err;
+    }
+};
+
+module.exports = { createNotification, sendPromotionToAll };

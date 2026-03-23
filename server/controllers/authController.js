@@ -4,6 +4,11 @@ const sendEmail = require('../utils/emailService');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { verifyEmailTemplate, resetPasswordTemplate } = require('../utils/emailTemplates');
+const { createNotification } = require('../utils/notificationService');
+ 
+const getIO = () => {
+    try { return require('../server').io; } catch { return null; }
+};
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
@@ -90,6 +95,24 @@ exports.loginUser = async (req, res) => {
                 isVerified: user.isVerified,
                 token: generateToken(user._id)
             });
+ 
+            // ── Notification: Login Security Alert ────────────────────────────
+            try {
+                await createNotification(getIO(), {
+                    userId: user._id.toString(),
+                    type: 'LOGIN',
+                    message: `Security alert: Your account was just logged in to. If this wasn't you, please change your password.`,
+                    userEmail: user.email,
+                    userName: user.name,
+                    metadata: {
+                        loginTime: new Date().toLocaleString('en-IN'),
+                        ip: req.ip
+                    }
+                });
+            } catch (notifErr) {
+                console.error('[AuthController] Login notification failed:', notifErr.message);
+            }
+            // ─────────────────────────────────────────────────────────────────
         } else {
             res.status(401).json({ success: false, message: 'Invalid email or password' });
         }
@@ -273,6 +296,24 @@ exports.socialLogin = async (req, res) => {
             isVerified: user.isVerified,
             token: generateToken(user._id)
         });
+ 
+        // ── Notification: Google Login Alert ───────────────────────────
+        try {
+            await createNotification(getIO(), {
+                userId: user._id.toString(),
+                type: 'LOGIN',
+                message: `Security alert: Your account was just accessed via Google Login.`,
+                userEmail: user.email,
+                userName: user.name,
+                metadata: {
+                    loginTime: new Date().toLocaleString('en-IN'),
+                    ip: req.ip
+                }
+            });
+        } catch (notifErr) {
+            console.error('[AuthController] Social Login notification failed:', notifErr.message);
+        }
+        // ───────────────────────────────────────────────────────────────
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
