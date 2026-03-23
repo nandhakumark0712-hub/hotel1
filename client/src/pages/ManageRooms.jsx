@@ -47,6 +47,15 @@ const ManageRooms = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    // 1. Create a local preview
+    const previewUrl = URL.createObjectURL(file);
+    
+    // 2. Add to UI immediately
+    setFormData(prev => ({
+      ...prev,
+      images: [...prev.images, previewUrl]
+    }));
+    
     const data = new FormData();
     data.append('image', file);
     
@@ -57,11 +66,22 @@ const ManageRooms = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      setFormData({ ...formData, images: [...formData.images, res.data.url] });
+      
+      // 3. Replace preview with Cloudinary URL
+      setFormData(prev => ({
+        ...prev,
+        images: prev.images.map(img => img === previewUrl ? res.data.url : img)
+      }));
     } catch (error) {
+      // 4. Cleanup on failure
+      setFormData(prev => ({
+        ...prev,
+        images: prev.images.filter(img => img !== previewUrl)
+      }));
       alert(error.response?.data?.message || 'Error uploading image');
     } finally {
       setUploadingImage(false);
+      URL.revokeObjectURL(previewUrl); 
     }
   };
 
@@ -248,26 +268,32 @@ const ManageRooms = () => {
                 <div className="space-y-4">
                   <label className="block text-sm font-bold text-dark">Room Images</label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    {formData.images.map((url, idx) => (
-                      <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-100 shadow-sm">
-                        <img src={resolveImageUrl(url)} className="w-full h-full object-cover" alt="" />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center backdrop-blur-[2px]">
-                          <button 
-                            type="button" 
-                            onClick={() => removeImage(idx)}
-                            className="bg-red-500 text-white p-2 rounded-xl scale-75 group-hover:scale-100 transition-transform hover:bg-red-600 shadow-lg"
-                          >
-                            <Trash2 className="w-5 h-5" />
-                          </button>
+                    {formData.images.map((url, idx) => {
+                      const isPending = url.startsWith('blob:');
+                      return (
+                        <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-100 shadow-sm">
+                          <img src={isPending ? url : resolveImageUrl(url)} className={`w-full h-full object-cover ${isPending ? 'blur-[1px] opacity-70' : ''}`} alt="" />
+                          {isPending ? (
+                            <div className="absolute inset-0 flex items-center justify-center bg-white/20">
+                              <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                            </div>
+                          ) : (
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center backdrop-blur-[2px]">
+                              <button 
+                                type="button" 
+                                onClick={() => removeImage(idx)}
+                                className="bg-red-500 text-white p-2 rounded-xl scale-75 group-hover:scale-100 transition-transform hover:bg-red-600 shadow-lg"
+                              >
+                                <Trash2 className="w-5 h-5" />
+                              </button>
+                            </div>
+                          )}
                         </div>
+                      );
+                    })}
+                      <div className="aspect-square rounded-2xl bg-gray-50 border-2 border-dashed border-gray-100 flex flex-col items-center justify-center opacity-0 absolute pointer-events-none">
+                         {/* Hidden global loader - we now use per-image loaders */}
                       </div>
-                    ))}
-                    {uploadingImage ? (
-                      <div className="aspect-square rounded-2xl bg-gray-50 border-2 border-dashed border-gray-100 flex flex-col items-center justify-center">
-                         <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                         <span className="text-[10px] font-bold text-gray-400 mt-2 uppercase tracking-wider">Uploading</span>
-                      </div>
-                    ) : (
                       <label className="aspect-square rounded-2xl bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 hover:border-primary/30 transition-all group">
                         <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:bg-primary group-hover:text-white transition-colors mb-2">
                           <Plus className="w-6 h-6" />
@@ -275,7 +301,6 @@ const ManageRooms = () => {
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-primary transition-colors">Add Image</span>
                         <input type="file" className="hidden" accept="image/*" onChange={handleImageUpload} />
                       </label>
-                    )}
                   </div>
                 </div>
 

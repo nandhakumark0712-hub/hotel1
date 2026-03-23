@@ -58,18 +58,39 @@ const ManageHotel = () => {
       return;
     }
 
+    // 1. Create a local preview URL for instant feedback
+    const previewUrl = URL.createObjectURL(file);
+    
+    // 2. Add it to the UI immediately
+    setFormData(prev => ({ 
+      ...prev, 
+      images: [...prev.images, previewUrl] 
+    }));
+    
     setUploadingImage(true);
     const imageData = new FormData();
     imageData.append('image', file);
 
     try {
       const { data } = await API.post('/api/upload', imageData);
-      setFormData({ ...formData, images: [...formData.images, data.url] });
+      
+      // 3. Replace the preview URL with the real Cloudinary URL
+      setFormData(prev => ({
+        ...prev,
+        images: prev.images.map(img => img === previewUrl ? data.url : img)
+      }));
+      
       toast.success('Image uploaded');
     } catch (error) {
+      // 4. Remove the failed preview if upload fails
+      setFormData(prev => ({
+        ...prev,
+        images: prev.images.filter(img => img !== previewUrl)
+      }));
       toast.error('Upload failed');
     } finally {
       setUploadingImage(false);
+      URL.revokeObjectURL(previewUrl); // Cleanup memory
     }
   };
 
@@ -236,16 +257,29 @@ const ManageHotel = () => {
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                {formData.images.map((url, idx) => (
-                  <div key={idx} className="relative aspect-square rounded-[2rem] overflow-hidden shadow-sm group border-4 border-white ring-1 ring-gray-100">
-                    <img src={resolveImageUrl(url)} alt={`Hotel ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                      <button type="button" onClick={() => removeImage(idx)} className="p-3 bg-white/20 hover:bg-red-500 text-white rounded-2xl transition-all">
-                        <Trash2 className="w-6 h-6" />
-                      </button>
+                {formData.images.map((url, idx) => {
+                  const isPending = url.startsWith('blob:');
+                  return (
+                    <div key={idx} className="relative aspect-square rounded-[2rem] overflow-hidden shadow-sm group border-4 border-white ring-1 ring-gray-100">
+                      <img 
+                        src={isPending ? url : resolveImageUrl(url)} 
+                        alt={`Hotel ${idx + 1}`} 
+                        className={`w-full h-full object-cover transition-transform duration-700 ${isPending ? 'blur-[2px] opacity-70' : 'group-hover:scale-110'}`} 
+                      />
+                      {isPending ? (
+                        <div className="absolute inset-0 flex items-center justify-center bg-white/40">
+                          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                        </div>
+                      ) : (
+                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                          <button type="button" onClick={() => removeImage(idx)} className="p-3 bg-white/20 hover:bg-red-500 text-white rounded-2xl transition-all">
+                            <Trash2 className="w-6 h-6" />
+                          </button>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
                 
                 {formData.images.length < 6 && (
                   <label className={`aspect-square flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-[2rem] bg-gray-50/50 cursor-pointer transition-all hover:border-primary hover:bg-primary/5 ${uploadingImage ? 'pointer-events-none opacity-50' : ''}`}>
