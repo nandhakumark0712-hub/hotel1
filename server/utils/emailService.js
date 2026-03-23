@@ -2,15 +2,28 @@ const nodemailer = require('nodemailer');
 
 // ── Nodemailer Transporter ──────────────────────────────────────────────────
 // Uses environment variables stored in .env
-const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.gmail.com',
-    port: parseInt(process.env.SMTP_PORT) || 587,
-    secure: false, // true for 465, false for other ports
+const transporterConfig = {
     auth: {
         user: process.env.EMAIL_USER || process.env.SMTP_USER,
         pass: process.env.EMAIL_PASS || process.env.SMTP_PASS
     }
-});
+};
+
+// If using Gmail, use the predefined service for better reliability
+if ((process.env.SMTP_HOST || '').includes('gmail') || (process.env.EMAIL_USER || '').includes('gmail.com')) {
+    transporterConfig.service = 'gmail';
+} else {
+    transporterConfig.host = process.env.SMTP_HOST || 'smtp.gmail.com';
+    transporterConfig.port = parseInt(process.env.SMTP_PORT) || 587;
+    transporterConfig.secure = transporterConfig.port === 465;
+}
+
+// Add TLS options to handle some environment-specific connectivity issues
+transporterConfig.tls = {
+    rejectUnauthorized: false
+};
+
+const transporter = nodemailer.createTransport(transporterConfig);
 
 /**
  * sendEmail

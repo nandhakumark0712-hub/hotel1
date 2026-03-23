@@ -168,18 +168,21 @@ exports.forgotPassword = async (req, res) => {
         const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/reset-password?token=${resetToken}`;
 
         try {
-            await sendEmail({
-                to: user.email,
-                subject: 'Password Reset Request',
-                html: resetPasswordTemplate(resetUrl)
+            await createNotification(getIO(), {
+                userId: user._id.toString(),
+                type: 'PASSWORD_RESET',
+                message: `Unlock your account: We've received a request to reset your password. If this was you, please check your email.`,
+                userEmail: user.email,
+                userName: user.name,
+                metadata: { resetUrl }
             });
             res.status(200).json({ success: true, message: 'Password reset link sent to your email.' });
         } catch (err) {
-            console.error('Failed to send reset email:', err);
+            console.error('Failed to send reset email notification:', err);
             user.resetToken = undefined;
             user.resetTokenExpiry = undefined;
             await user.save({ validateBeforeSave: false });
-            res.status(500).json({ success: false, message: 'Email could not be sent' });
+            res.status(500).json({ success: false, message: 'Notification or Email could not be sent' });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

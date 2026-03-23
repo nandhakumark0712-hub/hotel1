@@ -10,6 +10,8 @@ import {
 
 // ── Icon helpers ─────────────────────────────────────────────────────────────
 const typeIcon = {
+  LOGIN: '🔔',
+  PASSWORD_RESET: '🔑',
   BOOKING_CONFIRMED: '🏨',
   PAYMENT_CONFIRMED: '✅',
   BOOKING_CANCELLED: '❌',
@@ -18,6 +20,8 @@ const typeIcon = {
 };
 
 const typeBadge = {
+  LOGIN: '#3B82F6',
+  PASSWORD_RESET: '#8B5CF6',
   BOOKING_CONFIRMED: '#4F46E5',
   PAYMENT_CONFIRMED: '#059669',
   BOOKING_CANCELLED: '#DC2626',
