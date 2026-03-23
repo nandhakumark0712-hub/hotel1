@@ -235,7 +235,7 @@ const ManageHotel = () => {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {formData.images.map((url, idx) => (
                   <div key={idx} className="relative aspect-square rounded-[2rem] overflow-hidden shadow-sm group border-4 border-white ring-1 ring-gray-100">
                     <img src={resolveImageUrl(url)} alt={`Hotel ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
@@ -273,7 +273,7 @@ const ManageHotel = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {currentAmenities.map(amenity => (
                   <label key={amenity} className={`group flex items-center space-x-3 p-5 border rounded-[2rem] cursor-pointer transition-all duration-300 ${formData.amenities.includes(amenity) ? 'bg-primary border-primary text-white shadow-lg shadow-primary/20 scale-[1.02]' : 'bg-white border-gray-100 text-gray-500 hover:border-gray-200 hover:bg-gray-50'}`}>
                     <input 

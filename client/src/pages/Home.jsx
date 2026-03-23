@@ -156,7 +156,7 @@ const Home = () => {
                   <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">Hand-picked deals and seasonal specials</p>
                </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {promotions.map(promo => (
                 <div key={promo._id} className="premium-card p-10 bg-dark text-white border-none shadow-2xl relative overflow-hidden group hover:-translate-y-2 transition-all duration-500">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-1000"></div>
@@ -218,7 +218,7 @@ const Home = () => {
             View All <ArrowRight className="ml-2 w-5 h-5" />
           </button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {[
             { city: 'Goa', img: 'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2' },
             { city: 'Delhi', img: 'https://images.unsplash.com/photo-1587474260584-136574528ed5' },

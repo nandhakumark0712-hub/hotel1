@@ -71,7 +71,7 @@ const ManagerDashboard = () => {
     <div>
       <h2 className="text-2xl font-bold mb-6 text-dark tracking-tight">{title}</h2>
       <p className="text-gray-500 mb-8">Select a property below to manage its {title.toLowerCase()}.</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {hotels.map(hotel => (
           <Link key={hotel._id} to={`${linkPrefix}/${hotel._id}`} className="premium-card p-6 flex items-center justify-between hover:border-primary transition-colors group">
             <div className="flex items-center">
@@ -180,7 +180,7 @@ const ManagerDashboard = () => {
         {activeTab === 'dashboard' && (
           <div className="animate-fade-in-up">
             <h1 className="text-3xl font-bold text-dark mb-8 tracking-tight">Overview</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                <div className="premium-card p-6 bg-gradient-to-br from-white to-blue-50/50">
                   <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-4"><Hotel className="w-6 h-6" /></div>
                   <div className="text-gray-500 font-bold text-sm mb-1">Total Hotels</div>

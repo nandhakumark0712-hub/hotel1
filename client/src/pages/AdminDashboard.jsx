@@ -54,7 +54,7 @@ const AdminDashboard = () => {
                         </p>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Link to="/admin/analytics" className="bg-white/10 backdrop-blur-md p-6 rounded-[2rem] border border-white/10 hover:bg-white hover:text-primary transition-all group shadow-xl">
                             <TrendingUp size={32} className="mb-4 group-hover:scale-110 transition-transform" />
                             <div className="text-[10px] font-black uppercase tracking-widest opacity-60">View Reports</div>
@@ -68,9 +68,9 @@ const AdminDashboard = () => {
                     </div>
                 </div>
             </div>
-
+ 
             {/* Quick Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <QuickStatCard title="Total Platform Users" value={stats?.totalUsers} icon={<Users size={20} />} subText="Active & Verified" color="text-blue-600" bg="bg-blue-50" />
                 <QuickStatCard title="Partner Properties" value={stats?.totalHotels} icon={<Hotel size={20} />} subText="Global Hotels" color="text-purple-600" bg="bg-purple-50" />
                 <QuickStatCard title="Service Bookings" value={stats?.totalBookings} icon={<BookOpen size={20} />} subText="Confirmed Stays" color="text-orange-600" bg="bg-orange-50" />

@@ -147,7 +147,7 @@ const ManageRooms = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {rooms.map(room => (
           <div key={room._id} className="premium-card p-0 overflow-hidden flex flex-col">
             <div className="h-48 relative overflow-hidden bg-gray-100">
@@ -293,7 +293,7 @@ const ManageRooms = () => {
                 <div className="space-y-4">
                   <label className="block text-sm font-bold text-dark">Amenities</label>
                   <div className="bg-gray-50 p-4 md:p-6 rounded-2xl border border-gray-100">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-4 gap-x-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-4 gap-x-2">
                       {['WiFi', 'TV', 'AC', 'Mini Bar', 'Ocean View', 'Balcony', 'Room Service'].map(amenity => (
                         <label key={amenity} className="flex items-center space-x-3 cursor-pointer group">
                           <div className={`w-5 h-5 rounded flex items-center justify-center border transition-all ${formData.amenities.includes(amenity) ? 'bg-primary border-primary shadow-md shadow-primary/20' : 'bg-white border-gray-200 group-hover:border-primary/50'}`}>

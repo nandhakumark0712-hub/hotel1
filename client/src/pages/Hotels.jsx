@@ -194,7 +194,7 @@ const Hotels = () => {
               <p className="text-gray-500 max-w-md mx-auto">Try adjusting your filters or destination to see more results.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {hotels.map((hotel) => (
                 <HotelCard key={hotel._id} hotel={hotel} />
               ))}
