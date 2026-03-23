@@ -56,7 +56,7 @@ const PromotionsManagement = () => {
             setFormData({
                 ...formData,
                 hotelId: value,
-                offerLink: `http://localhost:5173/hotels/${value}`
+                offerLink: `${window.location.origin}/hotels/${value}`
             });
         } else {
             setFormData({ ...formData, [name]: value });
@@ -181,7 +181,7 @@ const PromotionsManagement = () => {
                             <input 
                                 type="text" 
                                 name="offerLink"
-                                placeholder="http://localhost:5173/hotel/65b..."
+                                placeholder={`${window.location.origin}/hotel/65b...`}
                                 className="w-full px-5 py-4 bg-gray-50 rounded-2xl outline-none focus:bg-white focus:ring-4 focus:ring-primary/5 border border-transparent focus:border-primary/20 transition-all font-semibold"
                                 value={formData.offerLink}
                                 onChange={handleChange}
