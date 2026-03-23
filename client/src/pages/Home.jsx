@@ -5,6 +5,7 @@ import API from '../services/api';
 import LocationSearch from '../components/hotel/LocationSearch';
 import RecommendedHotels from '../components/hotel/RecommendedHotels';
 import AdvancedSearchBar from '../components/common/AdvancedSearchBar';
+import GuestPicker from '../components/common/GuestPicker';
 
 const Home = () => {
   const [searchData, setSearchData] = useState({ city: '', checkIn: '', checkOut: '', guests: '2 Adults, 1 Room' });
@@ -31,6 +32,7 @@ const Home = () => {
     if (searchData.city) queryParams.append('city', searchData.city);
     if (searchData.checkIn) queryParams.append('checkIn', searchData.checkIn);
     if (searchData.checkOut) queryParams.append('checkOut', searchData.checkOut);
+    if (searchData.guests) queryParams.append('guests', searchData.guests);
     navigate(`/hotels?${queryParams.toString()}`);
   };
 
@@ -114,21 +116,12 @@ const Home = () => {
               </div>
 
               {/* Guests */}
-              <div className="search-field-container text-left group cursor-pointer relative col-span-1 sm:col-span-2 md:flex-1">
+              <div className="search-field-container text-left group cursor-pointer col-span-1 sm:col-span-2 md:flex-1 relative">
                 <span className="search-field-label">Guests & Rooms</span>
-                <div className="flex flex-col">
-                  <span className="text-lg font-bold text-dark truncate leading-tight mt-1">{searchData.guests}</span>
-                </div>
-                <select 
-                  className="absolute inset-0 opacity-0 cursor-pointer w-full"
+                <GuestPicker 
                   value={searchData.guests}
-                  onChange={(e) => setSearchData({...searchData, guests: e.target.value})}
-                >
-                  <option value="1 Adult, 1 Room">1 Adult, 1 Room</option>
-                  <option value="2 Adults, 1 Room">2 Adults, 1 Room</option>
-                  <option value="2 Adults, 2 Rooms">2 Adults, 2 Rooms</option>
-                  <option value="4 Adults, 2 Rooms">4 Adults, 2 Rooms</option>
-                </select>
+                  onChange={(val) => setSearchData({...searchData, guests: val})}
+                />
               </div>
             </div>
 

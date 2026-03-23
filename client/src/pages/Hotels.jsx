@@ -5,6 +5,8 @@ import { fetchHotels } from '../redux/slices/hotelSlice';
 import HotelCard from '../components/hotel/HotelCard';
 import { Loader2, Search, Filter, SlidersHorizontal, Calendar, X } from 'lucide-react';
 import LocationSearch from '../components/hotel/LocationSearch';
+import GuestPicker from '../components/common/GuestPicker';
+import { Users } from 'lucide-react';
 
 const Hotels = () => {
   const dispatch = useDispatch();
@@ -17,7 +19,8 @@ const Hotels = () => {
     minRating: '',
     amenities: [],
     checkIn: '',
-    checkOut: ''
+    checkOut: '',
+    guests: '2 Adults, 1 Room'
   });
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -29,6 +32,7 @@ const Hotels = () => {
     if (params.get('city')) newFilters.city = params.get('city');
     if (params.get('checkIn')) newFilters.checkIn = params.get('checkIn');
     if (params.get('checkOut')) newFilters.checkOut = params.get('checkOut');
+    if (params.get('guests')) newFilters.guests = params.get('guests');
     setFilters(newFilters);
   }, [location.search]);
 
@@ -124,8 +128,24 @@ const Hotels = () => {
                   />
                   <input 
                     type="date" 
-                    className="w-full px-4 py-3 border border-gray-100 rounded-xl outline-none bg-gray-50"
+                    className="w-full px-4 py-3 border border-gray-100 rounded-xl outline-none bg-gray-50 text-sm font-semibold"
+                    value={filters.checkOut}
                     onChange={(e) => setFilters({...filters, checkOut: e.target.value})}
+                  />
+                </div>
+              </div>
+ 
+              {/* Guests Selector */}
+              <div className="premium-card p-6 bg-white border border-gray-100">
+                <h4 className="font-bold mb-4 text-dark flex items-center">
+                  <Users className="w-4 h-4 mr-2 text-primary" />
+                  Travelers
+                </h4>
+                <div className="bg-gray-50 rounded-xl border border-gray-100 p-2 relative">
+                  <span className="text-[9px] font-black text-gray-300 uppercase tracking-widest absolute top-2 right-4">Manage</span>
+                  <GuestPicker 
+                    value={filters.guests}
+                    onChange={(val) => setFilters({...filters, guests: val})}
                   />
                 </div>
               </div>
@@ -153,7 +173,7 @@ const Hotels = () => {
 
               {/* Reset */}
               <button 
-                onClick={() => setFilters({ city: '', minPrice: '', maxPrice: '', minRating: '', amenities: [], checkIn: '', checkOut: '' })}
+                onClick={() => setFilters({ city: '', minPrice: '', maxPrice: '', minRating: '', amenities: [], checkIn: '', checkOut: '', guests: '2 Adults, 1 Room' })}
                 className="w-full text-center text-sm font-bold text-primary hover:text-primary-dark transition-colors"
               >
                 Clear All Filters
