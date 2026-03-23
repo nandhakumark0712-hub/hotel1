@@ -108,7 +108,10 @@ const createNotification = async (io, { userId, type, message, userEmail, userNa
             }
 
             if (html) {
-                await sendEmail({ to: targetEmail, subject, html });
+                // DON'T await sendEmail - let it run in the background
+                sendEmail({ to: targetEmail, subject, html }).catch(err => 
+                    console.error('[NotificationService] Background Email Error:', err.message)
+                );
             }
         }
 
@@ -151,7 +154,11 @@ const sendPromotionToAll = async (io, { title, discount, message, hotelName, off
             })
         );
 
-        await Promise.allSettled(promoPromises);
+        // DON'T await Promise.allSettled - let the broadcast run in the background
+        Promise.allSettled(promoPromises).then(results => {
+            const successCount = results.filter(r => r.status === 'fulfilled').length;
+            console.log(`[NotificationService] Broadcast complete. Successful: ${successCount}/${customers.length}`);
+        });
         return { success: true, count: customers.length };
     } catch (err) {
         console.error('[NotificationService] Broadcast Error:', err.message);
