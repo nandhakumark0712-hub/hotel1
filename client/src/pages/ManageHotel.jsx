@@ -5,6 +5,7 @@ import API from '../services/api';
 
 import LocationSearch from '../components/hotel/LocationSearch';
 import { toast } from 'react-hot-toast';
+import { resolveImageUrl } from '../utils/urlHelper';
 
 const ManageHotel = () => {
   const { id } = useParams();
@@ -62,7 +63,7 @@ const ManageHotel = () => {
     imageData.append('image', file);
 
     try {
-      const { data } = await API.post('/api/hotels/upload', imageData);
+      const { data } = await API.post('/api/upload', imageData);
       setFormData({ ...formData, images: [...formData.images, data.url] });
       toast.success('Image uploaded');
     } catch (error) {
@@ -237,7 +238,7 @@ const ManageHotel = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 {formData.images.map((url, idx) => (
                   <div key={idx} className="relative aspect-square rounded-[2rem] overflow-hidden shadow-sm group border-4 border-white ring-1 ring-gray-100">
-                    <img src={url} alt={`Hotel ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img src={resolveImageUrl(url)} alt={`Hotel ${idx + 1}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
                       <button type="button" onClick={() => removeImage(idx)} className="p-3 bg-white/20 hover:bg-red-500 text-white rounded-2xl transition-all">
                         <Trash2 className="w-6 h-6" />

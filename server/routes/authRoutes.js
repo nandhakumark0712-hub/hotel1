@@ -33,22 +33,4 @@ router.get('/google/callback',
   }
 );
 
-// GitHub OAuth
-router.get('/github', passport.authenticate('github', { scope: ['user:email'], session: false }));
-
-router.get('/github/callback', 
-  passport.authenticate('github', { failureRedirect: '/login', session: false }),
-  (req, res) => {
-    const token = generateToken(req.user._id);
-    const userData = JSON.stringify({
-      _id: req.user._id,
-      name: req.user.name,
-      email: req.user.email,
-      role: req.user.role,
-      token
-    });
-    res.redirect(`${process.env.CLIENT_URL || 'http://localhost:5173'}/login?oauth_success=true&user=${encodeURIComponent(userData)}`);
-  }
-);
-
 module.exports = router;

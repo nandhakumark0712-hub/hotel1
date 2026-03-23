@@ -1,13 +1,14 @@
 import React from 'react';
 import { Mail, Phone, MapPin, Star, Wifi, Coffee, Car } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { resolveImageUrl } from '../../utils/urlHelper';
 
 const HotelCard = ({ hotel }) => {
   return (
     <div className="premium-card group overflow-hidden">
       <div className="relative h-64 overflow-hidden">
         <img 
-          src={hotel?.images?.[0] || 'https://placehold.co/800x600?text=No+Hotel+Image'} 
+          src={resolveImageUrl(hotel?.images?.[0]) || 'https://placehold.co/800x600?text=No+Hotel+Image'} 
           alt={hotel?.name || 'Hotel'}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />

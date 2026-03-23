@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import API from '../services/api';
 import { Loader2, Plus, Trash2, Edit, Save, X, Bed, Users } from 'lucide-react';
+import { resolveImageUrl } from '../utils/urlHelper';
 
 const ManageRooms = () => {
   const { hotelId } = useParams();
@@ -131,7 +132,7 @@ const ManageRooms = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
         <div className="flex items-center gap-6">
           <img 
-            src={hotel?.images?.[0] || 'https://placehold.co/100?text=No+Hotel+Image'} 
+            src={resolveImageUrl(hotel?.images?.[0]) || 'https://placehold.co/100?text=No+Hotel+Image'} 
             className="w-20 h-20 rounded-2xl object-cover shadow-lg border-2 border-white" 
             alt={hotel?.name} 
           />
@@ -151,7 +152,7 @@ const ManageRooms = () => {
           <div key={room._id} className="premium-card p-0 overflow-hidden flex flex-col">
             <div className="h-48 relative overflow-hidden bg-gray-100">
                {room.images?.length > 0 ? (
-                 <img src={room.images[0]} className="w-full h-full object-cover" alt={room.roomType} />
+                 <img src={resolveImageUrl(room.images[0])} className="w-full h-full object-cover" alt={room.roomType} />
                ) : (
                  <div className="w-full h-full flex items-center justify-center text-gray-400">
                     <Bed className="w-12 h-12" />
@@ -249,7 +250,7 @@ const ManageRooms = () => {
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     {formData.images.map((url, idx) => (
                       <div key={idx} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-100 shadow-sm">
-                        <img src={url} className="w-full h-full object-cover" alt="" />
+                        <img src={resolveImageUrl(url)} className="w-full h-full object-cover" alt="" />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center backdrop-blur-[2px]">
                           <button 
                             type="button" 

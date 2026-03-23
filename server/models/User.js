@@ -32,7 +32,6 @@ const userSchema = new mongoose.Schema({
     oauthProvider: String,
     oauthId: String,
     googleId: String,
-    githubId: String,
     isVerified: {
         type: Boolean,
         default: false

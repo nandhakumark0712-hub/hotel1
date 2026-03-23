@@ -48,18 +48,21 @@ app.use(helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
-// Workaround for Express 5 where req.query is a getter-only property
-// express-mongo-sanitize attempts to reassign req.query, which throws an error
+// Fix for Express 5 where query and params might be getter-only
 app.use((req, res, next) => {
-    ['query', 'params', 'body', 'headers'].forEach((key) => {
+    ['query', 'params'].forEach((key) => {
         if (req[key]) {
             const val = req[key];
-            Object.defineProperty(req, key, {
-                value: val,
-                writable: true,
-                configurable: true,
-                enumerable: true
-            });
+            try {
+                Object.defineProperty(req, key, {
+                    value: val,
+                    writable: true,
+                    configurable: true,
+                    enumerable: true
+                });
+            } catch (e) {
+                // Already defined or non-configurable
+            }
         }
     });
     next();
@@ -143,7 +146,6 @@ const bookingRoutes = require('./routes/bookingRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
-const oauthRoutes = require('./routes/oauthRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const searchRoutes = require('./routes/searchRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
@@ -157,7 +159,6 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/payments', paymentRoutes);
-app.use('/api/oauth', oauthRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/upload', uploadRoutes);

@@ -245,21 +245,19 @@ exports.verifyEmail = async (req, res) => {
 // @route   POST /api/auth/social-login
 // @access  Public
 exports.socialLogin = async (req, res) => {
-    const { name, email, googleId, githubId, profileImage } = req.body;
+    const { name, email, googleId, profileImage } = req.body;
 
     try {
         let user = await User.findOne({ email });
 
         if (user) {
             if (googleId && !user.googleId) user.googleId = googleId;
-            if (githubId && !user.githubId) user.githubId = githubId;
-            await user.save();
+                await user.save();
         } else {
             user = await User.create({
                 name,
                 email,
                 googleId,
-                githubId,
                 profileImage,
                 isVerified: true, // Social accounts are usually verified
                 password: crypto.randomBytes(20).toString('hex') 

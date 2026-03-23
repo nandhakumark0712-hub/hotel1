@@ -1,12 +1,12 @@
-import React from 'react';
 import { Check, Users, Wifi, Coffee, Wind } from 'lucide-react';
+import { resolveImageUrl } from '../../utils/urlHelper';
 
 const RoomCard = ({ room, onSelect }) => {
   return (
     <div className="premium-card p-6 flex flex-col md:flex-row gap-8 items-center">
       <div className="w-full md:w-64 h-48 rounded-xl overflow-hidden shrink-0">
         <img 
-          src={room.images?.[0] || 'https://placehold.co/400x300?text=No+Room+Image'} 
+          src={resolveImageUrl(room.images?.[0]) || 'https://placehold.co/400x300?text=No+Room+Image'} 
           alt={room.roomType}
           className="w-full h-full object-cover"
         />

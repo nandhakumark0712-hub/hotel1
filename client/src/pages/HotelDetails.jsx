@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import API from '../services/api';
 import RoomCard from '../components/hotel/RoomCard';
 import { Loader2, Star, MapPin, ShieldCheck, MessageCircle, Hotel, Utensils, Heart, Waves, Dumbbell, Gamepad, CheckCircle2, Wifi, Zap } from 'lucide-react';
+import { resolveImageUrl } from '../utils/urlHelper';
 
 const HotelDetails = () => {
   const { id } = useParams();
@@ -77,16 +78,16 @@ const HotelDetails = () => {
         {hotel.images && hotel.images.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full h-auto md:h-[500px]">
             <div className="md:col-span-2 rounded-2xl md:rounded-3xl overflow-hidden shadow-lg border border-gray-100 h-64 md:h-full">
-              <img src={hotel.images[0]} alt={hotel.name} className="w-full h-full object-cover" />
+              <img src={resolveImageUrl(hotel.images[0])} alt={hotel.name} className="w-full h-full object-cover" />
             </div>
             {hotel.images.length > 1 && (
               <div className="flex flex-row md:flex-col gap-4 h-32 md:h-full">
                 <div className="flex-1 rounded-2xl md:rounded-3xl overflow-hidden shadow-lg">
-                  <img src={hotel.images[1]} alt={hotel.name} className="w-full h-full object-cover" />
+                  <img src={resolveImageUrl(hotel.images[1])} alt={hotel.name} className="w-full h-full object-cover" />
                 </div>
                 {hotel.images.length > 2 && (
                   <div className="flex-1 rounded-2xl md:rounded-3xl overflow-hidden shadow-lg">
-                    <img src={hotel.images[2]} alt={hotel.name} className="w-full h-full object-cover" />
+                    <img src={resolveImageUrl(hotel.images[2])} alt={hotel.name} className="w-full h-full object-cover" />
                   </div>
                 )}
               </div>
