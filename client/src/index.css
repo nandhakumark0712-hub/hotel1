@@ -441,45 +441,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   flex-shrink: 0;
 }
 
-/* Responsive Utilities */
-@media (max-width: 640px) {
-  h1 { font-size: 2.25rem !important; line-height: 2.5rem !important; }
-  h2 { font-size: 1.75rem !important; line-height: 2rem !important; }
-  .premium-card { border-radius: 1rem; padding: 1.5rem !important; }
-  .btn-primary { width: 100%; padding: 0.875rem 1.5rem; border-radius: 0.75rem; }
-  .search-field-container { padding: 1rem 0.75rem 0.375rem 0.75rem; }
-  .search-field-label { font-size: 0.6rem; left: 0.75rem; }
-  .notif-dropdown { width: calc(100vw - 24px) !important; right: -24px !important; }
-}
-
-/* Base formatting improvements */
-p {
-  line-height: 1.7;
-  color: #4b5563;
-}
-
-.text-dark {
-  color: #111827 !important;
-}
-
-.tracking-tight {
-  letter-spacing: -0.025em;
-}
-
-/* Smooth Scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Focus Ring */
-*:focus-visible {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
-}
-
-/* Image optimization */
-img {
-  max-width: 100%;
-  height: auto;
+/* Responsive */
+@media (max-width: 480px) {
+  .notif-dropdown {
+    width: calc(100vw - 24px);
+    right: -80px;
+  }
 }
 

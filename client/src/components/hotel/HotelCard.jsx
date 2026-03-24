@@ -46,13 +46,13 @@ const HotelCard = ({ hotel }) => {
           )}
         </div>
 
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-6 border-t border-gray-100 gap-4">
+        <div className="flex items-center justify-between pt-4 border-t">
           <div>
-            <span className="text-gray-400 text-[10px] font-black uppercase tracking-widest block mb-1">Price starts from</span>
-            <div className="text-2xl md:text-3xl font-black text-primary leading-none">₹{hotel?.rooms?.length > 0 ? Math.min(...hotel.rooms.map(r => r.price)) : 'N/A'}</div>
+            <span className="text-gray-400 text-sm">Starts from</span>
+            <div className="text-2xl font-bold text-primary">₹{hotel?.rooms?.length > 0 ? Math.min(...hotel.rooms.map(r => r.price)) : 'N/A'}</div>
           </div>
-          <Link to={`/hotels/${hotel?._id}`} className="w-full sm:w-auto btn-primary !py-3 !px-6 text-sm tracking-widest">
-            Book Now
+          <Link to={`/hotels/${hotel?._id}`} className="btn-primary">
+            View Details
           </Link>
         </div>
       </div>

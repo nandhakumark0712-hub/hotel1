@@ -50,77 +50,74 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[550px] md:h-[700px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent z-10" />
+      <section className="relative min-h-[500px] md:h-[650px] flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/20 z-10" />
         <img 
           src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&q=80&w=2000" 
           alt="Luxury Resort" 
-          className="absolute inset-0 w-full h-full object-cover scale-110 object-center"
+          className="absolute inset-0 w-full h-full object-cover scale-105"
         />
         
-        <div className="relative z-20 text-center px-6 max-w-5xl mx-auto -mt-16 md:-mt-32">
-          <h1 className="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-6 md:mb-10 tracking-[ -0.05em] leading-[0.9] drop-shadow-2xl">
-            Luxury Stays, <span className="text-secondary">Evolved.</span>
+        <div className="relative z-20 text-center px-4 max-w-5xl mx-auto -mt-10 md:-mt-20">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg">
+            Experience Your <span className="text-secondary tracking-tight">Dream</span> Vacation
           </h1>
-          <p className="text-lg md:text-2xl text-white/80 mb-12 md:mb-20 max-w-2xl mx-auto font-medium drop-shadow-lg hidden sm:block">
-            Elevate your travel experience with handpicked premium hotels & effortless bookings.
+          <p className="text-base md:text-xl text-white/90 mb-10 md:mb-16 max-w-2xl mx-auto font-medium drop-shadow-md">
+            Unlock exclusive stays at world-class hotels with our premium booking experience.
           </p>
 
-          {/* Search Box */}
-          <div className="relative max-w-5xl mx-auto w-full group">
-            <div className="bg-white/95 backdrop-blur-xl rounded-[2rem] md:rounded-[2.5rem] p-4 md:p-10 shadow-[0_30px_100px_rgba(0,0,0,0.3)] grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row gap-4 md:gap-6 items-stretch border border-white/20 transition-all duration-500 group-hover:shadow-[0_40px_120px_rgba(0,0,0,0.4)]">
+          {/* New Search Template */}
+          <div className="relative max-w-5xl mx-auto">
+            <div className="bg-white rounded-3xl md:rounded-[2rem] p-4 md:p-8 shadow-2xl grid grid-cols-1 sm:grid-cols-2 md:flex md:flex-row gap-4 items-stretch border border-white/20 backdrop-blur-sm">
               
               {/* Where to */}
               <div 
-                className="col-span-1 sm:col-span-2 md:flex-[2.5] search-field-container text-left cursor-text bg-gray-50/50"
+                className="col-span-1 sm:col-span-2 md:flex-[2] search-field-container text-left cursor-text"
                 onClick={() => document.getElementById('location-input')?.focus()}
               >
-                <span className="search-field-label">Destination</span>
+                <span className="search-field-label">Where to</span>
                 <LocationSearch 
                   id="location-input"
                   value={searchData.city}
                   onChange={(city) => setSearchData({...searchData, city})}
-                  placeholder="Where to?"
+                  placeholder="e.g. - Area, Landmark or Property Name"
                   unstyled={true}
                 />
               </div>
 
-              {/* Check-in/out combined row on small mobile */}
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:flex md:flex-[2.5] gap-4 w-full">
-                {/* Check-in */}
-                <div className="search-field-container text-left group cursor-pointer relative bg-gray-50/50 flex-1">
-                  <span className="search-field-label">Check-in</span>
-                  <div className="flex flex-col">
-                    <span className="text-base sm:text-lg font-bold text-dark">{formatDate(searchData.checkIn)}</span>
-                    <span className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase tracking-widest">{getDayName(searchData.checkIn) || 'Day'}</span>
-                  </div>
-                  <input 
-                    type="date"
-                    className="absolute inset-0 opacity-0 cursor-pointer z-20"
-                    onClick={(e) => e.target.showPicker?.()}
-                    onChange={(e) => setSearchData({...searchData, checkIn: e.target.value})}
-                  />
+              {/* Check-in */}
+              <div className="search-field-container text-left group cursor-pointer relative">
+                <span className="search-field-label">Check-in</span>
+                <div className="flex flex-col">
+                  <span className="text-lg font-bold text-dark">{formatDate(searchData.checkIn)}</span>
+                  <span className="text-xs text-gray-400 font-semibold">{getDayName(searchData.checkIn) || 'Select Day'}</span>
                 </div>
+                <input 
+                  type="date"
+                  className="absolute inset-0 opacity-0 cursor-pointer z-20"
+                  onClick={(e) => e.target.showPicker?.()}
+                  onChange={(e) => setSearchData({...searchData, checkIn: e.target.value})}
+                />
+              </div>
 
-                {/* Check-out */}
-                <div className="search-field-container text-left group cursor-pointer relative bg-gray-50/50 flex-1">
-                  <span className="search-field-label">Check-out</span>
-                  <div className="flex flex-col">
-                    <span className="text-base sm:text-lg font-bold text-dark">{formatDate(searchData.checkOut)}</span>
-                    <span className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase tracking-widest">{getDayName(searchData.checkOut) || 'Day'}</span>
-                  </div>
-                  <input 
-                    type="date"
-                    className="absolute inset-0 opacity-0 cursor-pointer z-20"
-                    onClick={(e) => e.target.showPicker?.()}
-                    onChange={(e) => setSearchData({...searchData, checkOut: e.target.value})}
-                  />
+              {/* Check-out */}
+              <div className="search-field-container text-left group cursor-pointer relative">
+                <span className="search-field-label">Check-out</span>
+                <div className="flex flex-col">
+                  <span className="text-lg font-bold text-dark">{formatDate(searchData.checkOut)}</span>
+                  <span className="text-xs text-gray-400 font-semibold">{getDayName(searchData.checkOut) || 'Select Day'}</span>
                 </div>
+                <input 
+                  type="date"
+                  className="absolute inset-0 opacity-0 cursor-pointer z-20"
+                  onClick={(e) => e.target.showPicker?.()}
+                  onChange={(e) => setSearchData({...searchData, checkOut: e.target.value})}
+                />
               </div>
 
               {/* Guests */}
-              <div className="search-field-container text-left group cursor-pointer col-span-1 sm:col-span-2 md:flex-[2] relative bg-gray-50/50">
-                <span className="search-field-label">Guests</span>
+              <div className="search-field-container text-left group cursor-pointer col-span-1 sm:col-span-2 md:flex-1 relative">
+                <span className="search-field-label">Guests & Rooms</span>
                 <GuestPicker 
                   value={searchData.guests}
                   onChange={(val) => setSearchData({...searchData, guests: val})}
@@ -128,13 +125,13 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Smart Search Button */}
-            <div className="absolute -bottom-8 md:-bottom-10 left-1/2 -translate-x-1/2 z-30 w-full max-w-xs px-6">
+            {/* Centered Search Button */}
+            <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 z-30">
               <button 
                 onClick={handleSearch}
-                className="w-full bg-primary hover:bg-primary-dark text-white py-5 md:py-6 rounded-2xl md:rounded-3xl font-black text-lg md:text-xl tracking-[0.2em] shadow-[0_20px_50px_rgba(255,90,54,0.4)] transition-all hover:scale-105 active:scale-95 uppercase flex items-center justify-center gap-3 group/btn"
+                className="bg-primary hover:bg-primary-dark text-white px-16 py-5 rounded-full font-black text-xl tracking-widest shadow-[0_10px_30px_rgba(255,90,54,0.4)] transition-all hover:scale-105 active:scale-95 uppercase"
               >
-                Start Search <ArrowRight size={24} className="group-hover/btn:translate-x-2 transition-transform" />
+                Search
               </button>
             </div>
           </div>

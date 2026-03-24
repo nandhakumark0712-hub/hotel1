@@ -5,7 +5,6 @@ import API from '../services/api';
 import { Loader2, Calendar, MapPin, Clock, CheckCircle, XCircle, Edit2, AlertTriangle, ArrowRight, User, Mail, Search } from 'lucide-react';
 import LocationSearch from '../components/hotel/LocationSearch';
 import RecommendedHotels from '../components/hotel/RecommendedHotels';
-import { resolveImageUrl } from '../utils/urlHelper';
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
@@ -173,16 +172,9 @@ const Dashboard = () => {
           ) : (
             <div className="space-y-6">
               {bookings.map((booking) => (
-                <div key={booking._id} className="premium-card p-4 md:p-6 lg:p-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center border-2 border-primary/5 hover:border-primary/20 transition-all duration-300">
-                  <div className="w-full md:w-48 h-56 md:h-48 rounded-[2rem] overflow-hidden shrink-0 shadow-2xl relative group/img">
-                    <img 
-                      src={resolveImageUrl(booking.hotelId.images?.[0])} 
-                      className="w-full h-full object-cover group-hover/img:scale-110 transition-transform duration-700" 
-                      alt={booking.hotelId.name} 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity flex items-end p-6">
-                       <span className="text-white text-xs font-black uppercase tracking-widest">View Details</span>
-                    </div>
+                <div key={booking._id} className="premium-card p-4 md:p-8 flex flex-col sm:flex-row gap-6 md:gap-8 items-start sm:items-center border hover:shadow-lg transition-shadow">
+                  <div className="w-full sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden shrink-0 aspect-video sm:aspect-square">
+                    <img src={booking.hotelId.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a850601f010'} className="w-full h-full object-cover" alt="" />
                   </div>
                   <div className="flex-grow w-full">
                     <div className="flex flex-col sm:flex-row justify-between items-start gap-2 mb-4">
