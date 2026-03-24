@@ -80,6 +80,7 @@ const Home = () => {
                   id="location-input"
                   value={searchData.city}
                   onChange={(city) => setSearchData({...searchData, city})}
+                  onSelect={(selected) => setSearchData({...searchData, city: selected.name})}
                   placeholder="e.g. - Area, Landmark or Property Name"
                   unstyled={true}
                 />

@@ -88,6 +88,7 @@ const Hotels = () => {
                 <LocationSearch 
                   value={filters.city}
                   onChange={(city) => setFilters({...filters, city})}
+                  onSelect={(selected) => setFilters({...filters, city: selected.name})}
                   placeholder="Where are you going?"
                 />
               </div>

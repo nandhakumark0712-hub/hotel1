@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import API from '../../services/api';
 
 export const fetchHotels = createAsyncThunk('hotels/fetchAll', async (filters, thunkAPI) => {
   try {
-    const response = await axios.get('/api/hotels', { params: filters });
+    const response = await API.get('/api/hotels', { params: filters });
     return response.data.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.message);
+    return thunkAPI.rejectWithValue(error.response?.data?.message || 'Failed to fetch hotels');
   }
 });
 
