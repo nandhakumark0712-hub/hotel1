@@ -5,7 +5,9 @@ const {
     paymentConfirmationTemplate, 
     cancellationTemplate, 
     promotionalTemplate,
-    loginEmailTemplate
+    loginEmailTemplate,
+    resetPasswordTemplate,
+    verifyEmailTemplate
 } = require('./emailTemplates');
 const User = require('../models/User');
 
@@ -61,6 +63,10 @@ const createNotification = async (io, { userId, type, message, userEmail, userNa
                         loginTime: metadata.loginTime || new Date().toLocaleString('en-IN')
                     });
                     subject = '🔔 Security Alert: New Login - NK Hotel Bookings';
+                    break;
+                case 'VERIFY_EMAIL':
+                    html = verifyEmailTemplate(metadata.verifyUrl);
+                    subject = '📧 Activate Your NK Hotel Bookings Account';
                     break;
                 case 'PASSWORD_RESET':
                     html = resetPasswordTemplate(metadata.resetUrl);
@@ -125,6 +131,7 @@ const getEmailSubject = (type) => {
     const subjects = {
         LOGIN: '🔔 Account Login Notification — NK Hotel Bookings',
         PASSWORD_RESET: '🔑 Password Reset Request — NK Hotel Bookings',
+        VERIFY_EMAIL: '✉️ Verify Your Email — NK Hotel Bookings',
         BOOKING_CONFIRMED: '🏨 Your Booking is Confirmed — NK Hotel Bookings',
         PAYMENT_CONFIRMED: '✅ Payment Received — NK Hotel Bookings',
         BOOKING_CANCELLED: '❌ Booking Cancellation — NK Hotel Bookings',

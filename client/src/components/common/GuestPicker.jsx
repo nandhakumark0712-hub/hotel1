@@ -8,7 +8,7 @@ const GuestPicker = ({ value, onChange }) => {
         children: 0,
         rooms: 1
     });
-    
+
     const wrapperRef = useRef(null);
 
     // Initialize from parent value if possible
@@ -38,20 +38,20 @@ const GuestPicker = ({ value, onChange }) => {
         const newVal = Math.max(type === 'adults' || type === 'rooms' ? 1 : 0, counts[type] + delta);
         const newCounts = { ...counts, [type]: newVal };
         setCounts(newCounts);
-        
+
         // Format string: "2 Adults, 1 Child, 1 Room"
         let str = `${newCounts.adults} Adult${newCounts.adults > 1 ? 's' : ''}`;
         if (newCounts.children > 0) {
             str += `, ${newCounts.children} Child${newCounts.children > 1 ? 'ren' : ''}`;
         }
         str += `, ${newCounts.rooms} Room${newCounts.rooms > 1 ? 's' : ''}`;
-        
+
         onChange(str);
     };
 
     return (
         <div className="md:h-full relative w-full" ref={wrapperRef}>
-            <div 
+            <div
                 className="text-left group cursor-pointer h-full border-none flex flex-col justify-center min-w-[140px]"
                 onClick={() => setIsOpen(!isOpen)}
             >
@@ -82,7 +82,7 @@ const GuestPicker = ({ value, onChange }) => {
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
-                                <button 
+                                <button
                                     type="button"
                                     onClick={(e) => { e.stopPropagation(); updateCount('adults', -1); }}
                                     className="w-10 h-10 rounded-xl border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-30"
@@ -91,7 +91,7 @@ const GuestPicker = ({ value, onChange }) => {
                                     <Minus size={16} />
                                 </button>
                                 <span className="font-black text-dark text-lg w-4 text-center">{counts.adults}</span>
-                                <button 
+                                <button
                                     type="button"
                                     onClick={(e) => { e.stopPropagation(); updateCount('adults', 1); }}
                                     className="w-10 h-10 rounded-xl border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-colors"
@@ -113,7 +113,7 @@ const GuestPicker = ({ value, onChange }) => {
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
-                                <button 
+                                <button
                                     type="button"
                                     onClick={(e) => { e.stopPropagation(); updateCount('children', -1); }}
                                     className="w-10 h-10 rounded-xl border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-30"
@@ -122,7 +122,7 @@ const GuestPicker = ({ value, onChange }) => {
                                     <Minus size={16} />
                                 </button>
                                 <span className="font-black text-dark text-lg w-4 text-center">{counts.children}</span>
-                                <button 
+                                <button
                                     type="button"
                                     onClick={(e) => { e.stopPropagation(); updateCount('children', 1); }}
                                     className="w-10 h-10 rounded-xl border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-colors"
@@ -144,7 +144,7 @@ const GuestPicker = ({ value, onChange }) => {
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
-                                <button 
+                                <button
                                     type="button"
                                     onClick={(e) => { e.stopPropagation(); updateCount('rooms', -1); }}
                                     className="w-10 h-10 rounded-xl border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-30"
@@ -153,7 +153,7 @@ const GuestPicker = ({ value, onChange }) => {
                                     <Minus size={16} />
                                 </button>
                                 <span className="font-black text-dark text-lg w-4 text-center">{counts.rooms}</span>
-                                <button 
+                                <button
                                     type="button"
                                     onClick={(e) => { e.stopPropagation(); updateCount('rooms', 1); }}
                                     className="w-10 h-10 rounded-xl border border-gray-100 flex items-center justify-center hover:bg-gray-50 transition-colors"
@@ -164,7 +164,7 @@ const GuestPicker = ({ value, onChange }) => {
                         </div>
                     </div>
 
-                    <button 
+                    <button
                         type="button"
                         onClick={() => setIsOpen(false)}
                         className="w-full mt-8 py-4 bg-dark text-white font-black text-sm rounded-2xl shadow-xl shadow-dark/10 hover:scale-[1.02] transform transition-all active:scale-95 flex items-center justify-center gap-2"

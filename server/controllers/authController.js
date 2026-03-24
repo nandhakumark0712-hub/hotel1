@@ -41,14 +41,16 @@ exports.registerUser = async (req, res) => {
             // Send verification email
             const verifyUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/verify-email?token=${verificationToken}`;
             try {
-                await sendEmail({
-                    to: user.email,
-                    subject: 'Verify Your Email to Activate Your Account',
-                    html: verifyEmailTemplate(verifyUrl)
+                await createNotification(getIO(), {
+                    userId: user._id.toString(),
+                    type: 'VERIFY_EMAIL',
+                    message: `Welcome to NK Hotel Bookings! Please verify your email to activate your account.`,
+                    userEmail: user.email,
+                    userName: user.name,
+                    metadata: { verifyUrl }
                 });
             } catch (error) {
-                console.error('Email sending failed:', error);
-                // We still let them register, just log error for dev
+                console.error('Email verification notification failed:', error);
             }
 
             res.status(201).json({
