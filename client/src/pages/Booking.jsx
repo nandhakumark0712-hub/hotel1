@@ -241,30 +241,32 @@ const Booking = () => {
         </div>
 
         <div>
-          <div className="premium-card p-8 bg-gray-50/50">
-            <div className="flex items-center mb-8">
-               <img src={hotel?.images[0]} alt="" className="w-20 h-20 rounded-xl object-cover mr-4" />
-               <div>
-                  <h3 className="text-xl font-bold text-dark">{hotel?.name}</h3>
-                  <p className="text-sm text-gray-500">{room?.type} Room</p>
+          <div className="premium-card p-6 md:p-8 bg-white border-2 border-primary/5">
+            <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 pb-8 border-b border-gray-100">
+               <img src={resolveImageUrl(hotel?.images?.[0])} alt="" className="w-full sm:w-24 h-48 sm:h-24 rounded-2xl object-cover shadow-lg" />
+               <div className="text-center sm:text-left">
+                  <h3 className="text-xl md:text-2xl font-black text-dark tracking-tight leading-tight">{hotel?.name}</h3>
+                  <p className="text-xs font-black text-primary uppercase tracking-[0.2em] mt-2">{room?.roomType} Experience</p>
                </div>
             </div>
 
-            <h3 className="text-lg font-bold mb-6">Price Summary</h3>
-            <div className="space-y-4 pb-8 border-b">
-              <div className="flex justify-between items-center text-gray-600">
-                <span>{room?.type} x {days} nights</span>
-                <span>₹{(room?.price || 0) * days}</span>
+            <h3 className="text-lg font-black mb-6 text-dark uppercase tracking-widest text-[10px]">Price Breakdown</h3>
+            <div className="space-y-4 pb-8 border-b border-gray-100">
+              <div className="flex justify-between items-center text-gray-500 font-medium">
+                <span className="text-sm">Stay Duration ({days} nights)</span>
+                <span className="text-dark font-bold italic">₹{(room?.price || 0) * days}</span>
               </div>
-              <div className="flex justify-between items-center text-gray-600">
-                <span>Service Fee (10%)</span>
-                <span>₹{Math.round((room?.price || 0) * days * 0.1)}</span>
+              <div className="flex justify-between items-center text-gray-500 font-medium">
+                <span className="text-sm">Service Fee & Taxes (10%)</span>
+                <span className="text-dark font-bold italic">₹{Math.round((room?.price || 0) * days * 0.1)}</span>
               </div>
             </div>
-            <div className="pt-6">
-              <div className="flex justify-between items-center text-2xl md:text-3xl font-bold text-dark">
-                <span>Total</span>
-                <span>₹{Math.round((room?.price || 0) * days * 1.1)}</span>
+            <div className="pt-8">
+              <div className="flex justify-between items-end">
+                <span className="text-xs font-black text-gray-300 uppercase tracking-[0.2em]">Total Amount</span>
+                <div className="text-right">
+                   <div className="text-4xl md:text-5xl font-black text-primary tracking-tighter leading-none">₹{Math.round((room?.price || 0) * days * 1.1)}</div>
+                </div>
               </div>
             </div>
 

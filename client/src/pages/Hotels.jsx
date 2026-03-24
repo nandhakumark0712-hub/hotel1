@@ -184,14 +184,16 @@ const Hotels = () => {
 
         {/* Listings */}
         <div className="flex-grow">
-          <div className="flex justify-between items-end mb-10">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 gap-6 pb-6 border-b border-gray-100">
             <div>
-              <h1 className="hidden lg:block text-4xl font-bold text-dark tracking-tight">Hotels in {filters.city || 'all destinations'}</h1>
-              <p className="text-gray-500 mt-2">{hotels.length} results found matching your search</p>
+              <p className="text-primary font-black uppercase tracking-[0.2em] text-[10px] mb-2">Available Properties</p>
+              <h1 className="text-3xl md:text-5xl font-black text-dark tracking-tighter">Hotels in {filters.city || 'all destinations'}</h1>
+              <p className="text-gray-400 font-medium mt-2">{hotels.length} luxury stays found matching your criteria</p>
             </div>
-            <div className="hidden lg:block">
-               <select className="bg-white border-gray-200 rounded-xl px-4 py-2 font-semibold text-sm outline-none focus:ring-2 focus:ring-primary shadow-sm cursor-pointer">
-                 <option>Sort by: Popularity</option>
+            <div className="w-full sm:w-auto">
+               <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest block mb-2 sm:text-right">Sort Results By</span>
+               <select className="w-full sm:w-auto bg-gray-50 border-none rounded-xl px-6 py-3 font-bold text-xs outline-none focus:ring-4 focus:ring-primary/5 shadow-sm cursor-pointer hover:bg-white transition-all uppercase tracking-widest">
+                 <option>Popularity</option>
                  <option>Price: Low to High</option>
                  <option>Rating: High to Low</option>
                </select>

@@ -12,18 +12,18 @@ const RoomCard = ({ room, onSelect }) => {
         />
       </div>
 
-      <div className="flex-grow">
-        <div className="flex justify-between items-start mb-4">
+      <div className="flex-grow w-full">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
           <div>
-            <h3 className="text-xl font-bold text-dark">{room.roomType}</h3>
-            <div className="flex items-center text-gray-500 mt-1">
-              <Users className="w-4 h-4 mr-1" />
+            <h3 className="text-xl md:text-2xl font-black text-dark tracking-tight">{room.roomType}</h3>
+            <div className="flex items-center text-gray-400 mt-2 font-bold text-xs uppercase tracking-widest">
+              <Users className="w-4 h-4 mr-2" />
               <span>Up to {room.capacity} Guests</span>
             </div>
           </div>
-          <div className="text-right">
-            <span className="text-3xl font-bold text-primary">₹{room.price}</span>
-            <span className="text-gray-400 text-sm block">per night</span>
+          <div className="text-left sm:text-right bg-primary/5 px-4 py-2 rounded-2xl border border-primary/10">
+            <span className="text-2xl md:text-3xl font-black text-primary">₹{room.price}</span>
+            <span className="text-gray-400 text-[10px] font-black uppercase tracking-tighter block">per night</span>
           </div>
         </div>
 

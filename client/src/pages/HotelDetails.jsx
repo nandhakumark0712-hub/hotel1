@@ -74,30 +74,28 @@ const HotelDetails = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* Gallery */}
-      <div className="flex flex-col md:flex-row gap-4 mb-8 md:mb-12">
+      <div className="mb-8 md:mb-16">
         {hotel.images && hotel.images.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full h-auto md:h-[500px]">
-            <div className="md:col-span-2 rounded-2xl md:rounded-3xl overflow-hidden shadow-lg border border-gray-100 h-64 md:h-full">
-              <img src={resolveImageUrl(hotel.images[0])} alt={hotel.name} className="w-full h-full object-cover" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 h-[300px] md:h-[550px]">
+            <div className="col-span-2 row-span-2 rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl">
+              <img src={resolveImageUrl(hotel.images[0])} alt={hotel.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
             </div>
             {hotel.images.length > 1 && (
-              <div className="flex flex-row md:flex-col gap-4 h-32 md:h-full">
-                <div className="flex-1 rounded-2xl md:rounded-3xl overflow-hidden shadow-lg">
-                  <img src={resolveImageUrl(hotel.images[1])} alt={hotel.name} className="w-full h-full object-cover" />
-                </div>
-                {hotel.images.length > 2 && (
-                  <div className="flex-1 rounded-2xl md:rounded-3xl overflow-hidden shadow-lg">
-                    <img src={resolveImageUrl(hotel.images[2])} alt={hotel.name} className="w-full h-full object-cover" />
-                  </div>
-                )}
+              <div className="hidden sm:block rounded-2xl md:rounded-3xl overflow-hidden shadow-xl">
+                <img src={resolveImageUrl(hotel.images[1])} alt={hotel.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              </div>
+            )}
+            {hotel.images.length > 2 && (
+              <div className="hidden sm:block rounded-2xl md:rounded-3xl overflow-hidden shadow-xl">
+                <img src={resolveImageUrl(hotel.images[2])} alt={hotel.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               </div>
             )}
           </div>
         ) : (
-          <div className="w-full h-64 md:h-96 bg-gray-100 rounded-3xl flex items-center justify-center text-gray-400">
+          <div className="w-full h-64 md:h-[400px] bg-gray-100 rounded-3xl flex items-center justify-center text-gray-400 border-2 border-dashed">
              <div className="text-center">
-                <Hotel className="w-16 h-16 mx-auto mb-4" />
-                <p className="font-bold">No images provided by the hotel</p>
+                <Hotel className="w-16 h-16 mx-auto mb-4 opacity-20" />
+                <p className="font-bold text-gray-300">Visual content coming soon</p>
              </div>
           </div>
         )}
