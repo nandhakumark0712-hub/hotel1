@@ -6,11 +6,11 @@ import { resolveImageUrl } from '../../utils/urlHelper';
 const HotelCard = ({ hotel }) => {
   return (
     <div className="premium-card group overflow-hidden">
-      <div className="relative h-64 md:h-72 w-full overflow-hidden bg-gray-100">
+      <div className="relative h-64 overflow-hidden">
         <img 
           src={resolveImageUrl(hotel?.images?.[0]) || 'https://placehold.co/800x600?text=No+Hotel+Image'} 
           alt={hotel?.name || 'Hotel'}
-          className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.15] transition-transform duration-1000 ease-out"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center shadow-sm z-10">
           <Star className="w-4 h-4 text-accent fill-accent mr-1" />
