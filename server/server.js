@@ -20,6 +20,7 @@ require('./config/passport');
 const { apiLimiter, authLimiter } = require('./middleware/rateLimiter');
 
 const app = express();
+app.set('trust proxy', 1); // Trust Render's proxy for accurate rate limiting
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
