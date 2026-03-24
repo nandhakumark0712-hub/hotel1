@@ -12,19 +12,23 @@ const Hotels = () => {
   const dispatch = useDispatch();
   const { hotels, isLoading, isError, message } = useSelector((state) => state.hotels);
   
-  const [filters, setFilters] = useState({
-    city: '',
-    minPrice: '',
-    maxPrice: '',
-    minRating: '',
-    amenities: [],
-    checkIn: '',
-    checkOut: '',
-    guests: '2 Adults, 1 Room'
-  });
-
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
+  const getInitialFilters = () => {
+    const params = new URLSearchParams(location.search);
+    return {
+      city: params.get('city') || '',
+      minPrice: params.get('minPrice') || '',
+      maxPrice: params.get('maxPrice') || '',
+      minRating: params.get('minRating') || '',
+      amenities: params.get('amenities') ? params.get('amenities').split(',') : [],
+      checkIn: params.get('checkIn') || '',
+      checkOut: params.get('checkOut') || '',
+      guests: params.get('guests') || '2 Adults, 1 Room'
+    };
+  };
+
+  const [filters, setFilters] = useState(getInitialFilters());
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
