@@ -21,9 +21,8 @@ exports.getHotels = async (req, res) => {
         // 1. Basic Filters
         if (city) {
             query.$or = [
-                { 'location.city': { $regex: city, $options: 'i' } },
-                { 'location.address': { $regex: city, $options: 'i' } },
-                { 'location.state': { $regex: city, $options: 'i' } }
+                { 'location.city': { $regex: `^${city}$`, $options: 'i' } },
+                { 'location.state': { $regex: `^${city}$`, $options: 'i' } }
             ];
         }
         if (minRating) query.rating = { $gte: Number(minRating) };
