@@ -9,7 +9,6 @@ const getInitialUser = () => {
     if (path.startsWith('/manager')) key = 'user_manager';
     else if (path.startsWith('/admin')) key = 'user_admin';
     
-    // STRICT role-based session: Only get from the relevant key in sessionStorage
     const storedUser = sessionStorage.getItem(key);
     return storedUser ? JSON.parse(storedUser) : null;
   } catch (error) {
@@ -24,7 +23,6 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
   try {
     const response = await API.post('/api/auth/login', userData);
     if (response.data) {
-      // Use sessionStorage for tab-independence and role-specific keys
       const roleKey = `user_${response.data.role}`;
       sessionStorage.setItem(roleKey, JSON.stringify(response.data));
     }
@@ -34,7 +32,6 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
     return thunkAPI.rejectWithValue(message);
   }
 });
-
 
 export const register = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
   try {

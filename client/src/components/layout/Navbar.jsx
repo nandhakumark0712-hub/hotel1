@@ -102,9 +102,13 @@ const Navbar = () => {
             ) : (
               <div className="flex items-center space-x-3">
                 {isAdminPath ? (
-                  <Link to="/admin/login" className="text-gray-600 hover:text-primary font-medium text-sm">Admin Login</Link>
+                  <>
+                    <Link to="/admin/login" className="text-gray-600 hover:text-primary font-medium text-sm">Admin Login</Link>
+                  </>
                 ) : isManagerPath ? (
-                  <Link to="/manager/login" className="text-gray-600 hover:text-primary font-medium text-sm">Manager Login</Link>
+                  <>
+                    <Link to="/manager/login" className="text-gray-600 hover:text-primary font-medium text-sm">Manager Login</Link>
+                  </>
                 ) : (
                   <>
                     <Link to="/customer/login" className="text-gray-600 hover:text-primary font-medium text-sm">Login</Link>
