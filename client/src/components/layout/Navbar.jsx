@@ -102,15 +102,10 @@ const Navbar = () => {
             ) : (
               <div className="flex items-center space-x-3">
                 {isAdminPath ? (
-                  <>
-                    <Link to="/admin/login" className="btn-primary py-2 px-6 text-sm">Admin Login</Link>
-                  </>
+                  <Link to="/admin/login" className="text-gray-600 hover:text-primary font-medium text-sm">Admin Login</Link>
                 ) : isManagerPath ? (
-                  <>
-                    <Link to="/manager/login" className="btn-primary py-2 px-6 text-sm">Manager Login</Link>
-                  </>
+                  <Link to="/manager/login" className="text-gray-600 hover:text-primary font-medium text-sm">Manager Login</Link>
                 ) : (
-
                   <>
                     <Link to="/customer/login" className="text-gray-600 hover:text-primary font-medium text-sm">Login</Link>
                     <Link to="/customer/register" className="btn-primary py-2 px-4 text-sm">Sign Up</Link>
@@ -217,7 +212,6 @@ const Navbar = () => {
                   ) : isManagerPath ? (
                     <Link to="/manager/login" onClick={() => setIsMobileMenuOpen(false)} className="col-span-2 flex items-center justify-center p-4 rounded-2xl bg-primary text-white font-bold">Manager Login</Link>
                   ) : (
-
                     <>
                       <Link to="/customer/login" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center p-4 rounded-2xl bg-gray-50 font-bold text-dark">Login</Link>
                       <Link to="/customer/register" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center justify-center p-4 rounded-2xl bg-primary text-white font-bold">Sign Up</Link>

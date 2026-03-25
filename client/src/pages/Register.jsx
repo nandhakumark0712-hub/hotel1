@@ -140,10 +140,10 @@ const Register = ({ role: initialRole }) => {
           </button>
         </form>
 
-
         <p className="text-center text-sm text-gray-500">
           Already have an account? <Link to={getLoginLink()} className="text-primary font-bold hover:underline">Sign in</Link>
         </p>
+
       </div>
     </div>
   );
