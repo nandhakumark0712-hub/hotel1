@@ -30,9 +30,11 @@ const Login = ({ role: initialRole }) => {
     // Only dispatch if user is not already logged in
     if (oauth_success && userData && !user) {
       const parsedUser = JSON.parse(decodeURIComponent(userData));
+      const roleKey = `user_${parsedUser.role}`;
+      sessionStorage.setItem(roleKey, JSON.stringify(parsedUser));
       dispatch({ type: 'auth/login/fulfilled', payload: parsedUser });
-      localStorage.setItem('user', JSON.stringify(parsedUser));
     }
+
   }, [location.search, dispatch, user]);
 
   useEffect(() => {

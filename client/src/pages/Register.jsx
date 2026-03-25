@@ -129,22 +129,6 @@ const Register = ({ role: initialRole }) => {
               </p>
             </div>
 
-            {!initialRole && (
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Account Type</label>
-                <div className="relative">
-                  <ShieldCheck className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <select
-                    className="block w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none appearance-none"
-                    onChange={(e) => setFormData({...formData, role: e.target.value})}
-                  >
-                    <option value="customer">Customer</option>
-                    <option value="manager">Hotel Manager</option>
-                    <option value="admin">Admin Console</option>
-                  </select>
-                </div>
-              </div>
-            )}
           </div>
 
           <button
@@ -155,6 +139,7 @@ const Register = ({ role: initialRole }) => {
             {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <span>Create Account</span>}
           </button>
         </form>
+
 
         <p className="text-center text-sm text-gray-500">
           Already have an account? <Link to={getLoginLink()} className="text-primary font-bold hover:underline">Sign in</Link>

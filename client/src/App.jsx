@@ -84,13 +84,12 @@ const AppContent = () => {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/verify-email/:token" element={<VerifyEmail />} />
           
-          {/* Direct Role Login/Register Routes */}
+          {/* Direct Role Login Routes */}
           <Route path="/customer/login" element={<Login role="customer" />} />
           <Route path="/customer/register" element={<Register role="customer" />} />
           <Route path="/manager/login" element={<Login role="manager" />} />
-          <Route path="/manager/register" element={<Register role="manager" />} />
           <Route path="/admin/login" element={<Login role="admin" />} />
-          <Route path="/admin/register" element={<Register role="admin" />} />
+
 
           <Route path="/login" element={<Login role="customer" />} />
           <Route path="/register" element={<Register role="customer" />} />

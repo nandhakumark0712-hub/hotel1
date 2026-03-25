@@ -13,8 +13,9 @@ API.interceptors.request.use((config) => {
   if (path.startsWith('/manager')) key = 'user_manager';
   else if (path.startsWith('/admin')) key = 'user_admin';
 
-  const user = JSON.parse(localStorage.getItem(key) || localStorage.getItem('user'));
+  const user = JSON.parse(sessionStorage.getItem(key));
   if (user && user.token) {
+
     config.headers.Authorization = `Bearer ${user.token}`;
   }
   return config;

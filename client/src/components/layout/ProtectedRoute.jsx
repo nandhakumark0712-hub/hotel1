@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     if (path.startsWith('/manager')) expectedKey = 'user_manager';
     else if (path.startsWith('/admin')) expectedKey = 'user_admin';
     
-    const storedUser = localStorage.getItem(expectedKey);
+    const storedUser = sessionStorage.getItem(expectedKey);
     if (storedUser) {
       const parsed = JSON.parse(storedUser);
       // If we have a stored user for this role and it's different from current Redux user, swap it
@@ -24,6 +24,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
         dispatch(setRoleUser(parsed));
       }
     }
+
   }, [location.pathname, dispatch, user?._id]);
 
   // 1. Initial Auth Hydration check:

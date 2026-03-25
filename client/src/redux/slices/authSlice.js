@@ -9,11 +9,11 @@ const getInitialUser = () => {
     if (path.startsWith('/manager')) key = 'user_manager';
     else if (path.startsWith('/admin')) key = 'user_admin';
     
-    // Try to get role-specific user first, then fallback to global 'user'
-    const storedUser = localStorage.getItem(key) || localStorage.getItem('user');
+    // STRICT role-based session: Only get from the relevant key in sessionStorage
+    const storedUser = sessionStorage.getItem(key);
     return storedUser ? JSON.parse(storedUser) : null;
   } catch (error) {
-    console.error('Error parsing user from localStorage:', error);
+    console.error('Error parsing user from sessionStorage:', error);
     return null;
   }
 };
@@ -24,9 +24,9 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
   try {
     const response = await API.post('/api/auth/login', userData);
     if (response.data) {
+      // Use sessionStorage for tab-independence and role-specific keys
       const roleKey = `user_${response.data.role}`;
-      localStorage.setItem(roleKey, JSON.stringify(response.data));
-      localStorage.setItem('user', JSON.stringify(response.data)); // Keep for compatibility
+      sessionStorage.setItem(roleKey, JSON.stringify(response.data));
     }
     return response.data;
   } catch (error) {
@@ -35,13 +35,13 @@ export const login = createAsyncThunk('auth/login', async (userData, thunkAPI) =
   }
 });
 
+
 export const register = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
   try {
     const response = await API.post('/api/auth/register', userData);
     if (response.data) {
       const roleKey = `user_${response.data.role}`;
-      localStorage.setItem(roleKey, JSON.stringify(response.data));
-      localStorage.setItem('user', JSON.stringify(response.data));
+      sessionStorage.setItem(roleKey, JSON.stringify(response.data));
     }
     return response.data;
   } catch (error) {
@@ -61,10 +61,10 @@ const authSlice = createSlice({
   reducers: {
     logout: (state, action) => {
       const role = action.payload || state.user?.role || 'customer';
-      localStorage.removeItem(`user_${role}`);
-      localStorage.removeItem('user');
+      sessionStorage.removeItem(`user_${role}`);
       state.user = null;
     },
+
     setRoleUser: (state, action) => {
       state.user = action.payload;
     },
