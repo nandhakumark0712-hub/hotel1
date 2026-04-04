@@ -62,7 +62,7 @@ const Booking = () => {
   const handleBooking = async () => {
     if (!checkIn || !checkOut) return alert('Please select dates');
     if (!availability.available) return alert('Room is not available for these dates');
-    
+
     setBookingLoading(true);
     try {
       const days = (new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24);
@@ -76,7 +76,7 @@ const Booking = () => {
         totalPrice: Math.round(room.price * days * 1.1), // Total with fees
         paymentMethod
       });
-      
+
       if (paymentMethod === 'stripe') {
         const { data: paymentData } = await API.post('/api/payments/create-checkout-session', {
           bookingId: bookingData.data._id
@@ -108,7 +108,7 @@ const Booking = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       <h1 className="text-3xl md:text-4xl font-bold mb-8 md:mb-12 tracking-tight text-dark">Complete Your Booking</h1>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div className="space-y-8">
           <div className="premium-card p-8">
@@ -122,8 +122,8 @@ const Booking = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Check-in Date</label>
-                <input 
-                  type="date" 
+                <input
+                  type="date"
                   min={today}
                   className="w-full px-4 py-3 border border-gray-100 rounded-xl bg-gray-50/50 focus:ring-2 focus:ring-primary outline-none transition-all"
                   value={checkIn}
@@ -132,8 +132,8 @@ const Booking = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Check-out Date</label>
-                <input 
-                  type="date" 
+                <input
+                  type="date"
                   min={checkIn || today}
                   className="w-full px-4 py-3 border border-gray-100 rounded-xl bg-gray-50/50 focus:ring-2 focus:ring-primary outline-none transition-all"
                   value={checkOut}
@@ -146,8 +146,8 @@ const Booking = () => {
               <div className={`mt-6 p-4 rounded-xl flex items-center ${availability.available ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
                 <Info className="w-5 h-5 mr-3" />
                 <span className="font-medium">
-                  {availability.available 
-                    ? `Excellent choice! ${availability.unitsRemaining} ${room.type} rooms still available.` 
+                  {availability.available
+                    ? `Excellent choice! ${availability.unitsRemaining} ${room.type} rooms still available.`
                     : `Sorry, this room is fully booked for the selected dates.`}
                 </span>
               </div>
@@ -160,7 +160,7 @@ const Booking = () => {
               Payment Method
             </h3>
             <div className="space-y-4">
-              <div 
+              <div
                 onClick={() => setPaymentMethod('pay-at-hotel')}
                 className={`p-4 border-2 flex items-center justify-between cursor-pointer rounded-2xl transition-all ${paymentMethod === 'pay-at-hotel' ? 'border-primary bg-primary/5' : 'border-gray-200 hover:border-gray-300'}`}
               >
@@ -176,7 +176,7 @@ const Booking = () => {
                 {paymentMethod === 'pay-at-hotel' && <ShieldCheck className="w-6 h-6 text-primary" />}
               </div>
 
-              <div 
+              <div
                 onClick={() => setPaymentMethod('stripe')}
                 className={`p-4 border-2 flex flex-col cursor-pointer rounded-2xl transition-all ${paymentMethod === 'stripe' ? 'border-indigo-600 bg-indigo-50/50' : 'border-gray-200 hover:border-gray-300'}`}
               >
@@ -192,27 +192,27 @@ const Booking = () => {
                   </div>
                   {paymentMethod === 'stripe' && <ShieldCheck className="w-6 h-6 text-indigo-600" />}
                 </div>
-                
+
                 {paymentMethod === 'stripe' && (
                   <div className="mt-4 pt-4 border-t border-indigo-100 space-y-3 animate-in fade-in slide-in-from-top-2">
                     <div className="relative">
-                      <input 
-                        type="text" 
-                        placeholder="Card Number" 
+                      <input
+                        type="text"
+                        placeholder="Card Number"
                         className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg outline-none focus:border-indigo-600"
                         maxLength="19"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
-                      <input 
-                        type="text" 
-                        placeholder="MM / YY" 
+                      <input
+                        type="text"
+                        placeholder="MM / YY"
                         className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg outline-none focus:border-indigo-600"
                         maxLength="5"
                       />
-                      <input 
-                        type="password" 
-                        placeholder="CVC" 
+                      <input
+                        type="password"
+                        placeholder="CVC"
                         className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg outline-none focus:border-indigo-600"
                         maxLength="3"
                       />
@@ -221,7 +221,7 @@ const Booking = () => {
                 )}
               </div>
 
-              <div 
+              <div
                 onClick={() => setPaymentMethod('razorpay')}
                 className={`p-4 border-2 flex items-center justify-between cursor-pointer rounded-2xl transition-all ${paymentMethod === 'razorpay' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200 hover:border-gray-300'}`}
               >
@@ -230,7 +230,7 @@ const Booking = () => {
                     <CreditCard className="w-6 h-6" />
                   </div>
                   <div>
-                    <div className="font-bold">UPI / Net Banking (Razorpay)</div>
+                    <div className="font-bold"> Razorpay</div>
                     <div className="text-sm text-gray-500">Fast and secure local payments</div>
                   </div>
                 </div>
@@ -243,11 +243,11 @@ const Booking = () => {
         <div>
           <div className="premium-card p-8 bg-gray-50/50">
             <div className="flex items-center mb-8">
-               <img src={hotel?.images[0]} alt="" className="w-20 h-20 rounded-xl object-cover mr-4" />
-               <div>
-                  <h3 className="text-xl font-bold text-dark">{hotel?.name}</h3>
-                  <p className="text-sm text-gray-500">{room?.type} Room</p>
-               </div>
+              <img src={hotel?.images[0]} alt="" className="w-20 h-20 rounded-xl object-cover mr-4" />
+              <div>
+                <h3 className="text-xl font-bold text-dark">{hotel?.name}</h3>
+                <p className="text-sm text-gray-500">{room?.type} Room</p>
+              </div>
             </div>
 
             <h3 className="text-lg font-bold mb-6">Price Summary</h3>
@@ -268,7 +268,7 @@ const Booking = () => {
               </div>
             </div>
 
-            <button 
+            <button
               onClick={handleBooking}
               disabled={bookingLoading || days <= 0 || !availability.available}
               className="w-full btn-primary py-5 mt-10 text-xl flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed group"
