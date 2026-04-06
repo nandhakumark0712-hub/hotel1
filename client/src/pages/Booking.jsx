@@ -262,8 +262,8 @@ const Booking = () => {
                 {paymentMethod === 'upi' && (
                   <div className="mt-4 pt-4 border-t border-emerald-100 animate-in fade-in slide-in-from-top-2">
                     <div className="flex items-center space-x-6 justify-center bg-white p-3 rounded-xl border border-emerald-100">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Google_Pay_Logo.svg" alt="GPay" className="h-6 w-auto opacity-70" />
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo.svg" alt="Paytm" className="h-5 w-auto opacity-70" />
+                      <img src="https://img.icons8.com/color/48/000000/google-pay.png" alt="GPay" className="h-6 w-auto opacity-70" />
+                      <img src="https://img.icons8.com/color/48/000000/paytm.png" alt="Paytm" className="h-5 w-auto opacity-70" />
                       <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg" alt="PhonePe" className="h-6 w-auto opacity-70" />
                     </div>
                     <div className="mt-3">
