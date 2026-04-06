@@ -263,17 +263,34 @@ const Booking = () => {
                 </div>
 
                 {paymentMethod === 'upi' && (
-                  <div className="mt-4 pt-4 border-t border-emerald-100 animate-in fade-in slide-in-from-top-2">
-                    <div className="flex items-center space-x-6 justify-center bg-white p-3 rounded-xl border border-emerald-100">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Google_Pay_Logo.svg" alt="GPay" className="h-6 w-auto opacity-70" />
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo.svg" alt="Paytm" className="h-5 w-auto opacity-70" />
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg" alt="PhonePe" className="h-6 w-auto opacity-70" />
+                  <div className="mt-4 pt-6 border-t border-emerald-100 animate-in fade-in slide-in-from-top-2">
+                    <p className="text-sm font-medium text-gray-500 mb-4 text-center">Select your preferred app or enter ID</p>
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                      <div className="flex flex-col items-center group cursor-pointer">
+                        <div className="w-full aspect-square flex items-center justify-center bg-white p-4 rounded-2xl border border-gray-100 group-hover:border-emerald-500 group-hover:shadow-md transition-all mb-2">
+                          <img src="https://www.vectorlogo.zone/logos/google_pay/google_pay-icon.svg" alt="GPay" className="h-10 w-10 object-contain" />
+                        </div>
+                        <span className="text-xs font-bold text-gray-400 group-hover:text-emerald-600">GPay</span>
+                      </div>
+                      <div className="flex flex-col items-center group cursor-pointer">
+                        <div className="w-full aspect-square flex items-center justify-center bg-white p-4 rounded-2xl border border-gray-100 group-hover:border-emerald-500 group-hover:shadow-md transition-all mb-2">
+                          <img src="https://www.vectorlogo.zone/logos/paytm/paytm-icon.svg" alt="Paytm" className="h-10 w-10 object-contain" />
+                        </div>
+                        <span className="text-xs font-bold text-gray-400 group-hover:text-emerald-600">Paytm</span>
+                      </div>
+                      <div className="flex flex-col items-center group cursor-pointer">
+                        <div className="w-full aspect-square flex items-center justify-center bg-white p-4 rounded-2xl border border-gray-100 group-hover:border-emerald-500 group-hover:shadow-md transition-all mb-2">
+                          <img src="https://www.vectorlogo.zone/logos/phonepe/phonepe-icon.svg" alt="PhonePe" className="h-10 w-10 object-contain" />
+                        </div>
+                        <span className="text-xs font-bold text-gray-400 group-hover:text-emerald-600">PhonePe</span>
+                      </div>
                     </div>
-                    <div className="mt-3">
+                    <div>
+                       <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 ml-1">Or Enter UPI ID</label>
                        <input
                         type="text"
-                        placeholder="Enter UPI ID (e.g., name@okicici)"
-                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-emerald-600 transition-all font-mono"
+                        placeholder="e.g. username@bank"
+                        className="w-full px-4 py-4 bg-gray-50 border border-gray-100 rounded-xl outline-none focus:border-emerald-600 focus:bg-white transition-all font-mono"
                       />
                     </div>
                   </div>
