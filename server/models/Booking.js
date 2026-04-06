@@ -38,6 +38,11 @@ const bookingSchema = new mongoose.Schema({
         enum: ['Unpaid', 'Paid', 'Refunded'],
         default: 'Unpaid'
     },
+    paymentMethod: {
+        type: String,
+        enum: ['pay-at-hotel', 'stripe', 'razorpay', 'upi'],
+        default: 'pay-at-hotel'
+    },
     stripeSessionId: String,
     paymentId: String
 }, {

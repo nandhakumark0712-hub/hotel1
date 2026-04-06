@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import API from '../services/api';
-import { Loader2, Calendar, CreditCard, ArrowRight, ShieldCheck, Info } from 'lucide-react';
+import { Loader2, Calendar, CreditCard, ArrowRight, ShieldCheck, Info, Wallet, Smartphone, Banknote } from 'lucide-react';
 
 const Booking = () => {
   const [searchParams] = useSearchParams();
@@ -83,8 +83,9 @@ const Booking = () => {
         });
         if (paymentData.url) window.location.href = paymentData.url;
         else alert('Payment initialization failed');
-      } else if (paymentMethod === 'razorpay') {
-        navigate(`/payment-success?type=razorpay&bookingId=${bookingData.data._id}`);
+      } else if (paymentMethod === 'razorpay' || paymentMethod === 'upi') {
+        alert('Payment successfull! Your booking is confirmed.');
+        navigate(`/payment-success?type=${paymentMethod}&bookingId=${bookingData.data._id}`);
       } else {
         alert('Booking received! You have selected Pay At Hotel. Reservation is pending.');
         navigate('/dashboard');
@@ -162,14 +163,14 @@ const Booking = () => {
             <div className="space-y-4">
               <div
                 onClick={() => setPaymentMethod('pay-at-hotel')}
-                className={`p-4 border-2 flex items-center justify-between cursor-pointer rounded-2xl transition-all ${paymentMethod === 'pay-at-hotel' ? 'border-primary bg-primary/5' : 'border-gray-200 hover:border-gray-300'}`}
+                className={`p-5 border-2 flex items-center justify-between cursor-pointer rounded-2xl transition-all hover:shadow-md ${paymentMethod === 'pay-at-hotel' ? 'border-primary bg-primary/5' : 'border-gray-200'}`}
               >
                 <div className="flex items-center">
-                  <div className={`p-2 rounded-lg mr-4 ${paymentMethod === 'pay-at-hotel' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-400'}`}>
-                    <CreditCard className="w-6 h-6" />
+                  <div className={`p-3 rounded-xl mr-4 ${paymentMethod === 'pay-at-hotel' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-400'}`}>
+                    <Banknote className="w-6 h-6" />
                   </div>
                   <div>
-                    <div className="font-bold">Pay At Hotel</div>
+                    <div className="font-bold text-lg">Pay At Hotel</div>
                     <div className="text-sm text-gray-500">Secure booking, no immediate payment</div>
                   </div>
                 </div>
@@ -178,15 +179,15 @@ const Booking = () => {
 
               <div
                 onClick={() => setPaymentMethod('stripe')}
-                className={`p-4 border-2 flex flex-col cursor-pointer rounded-2xl transition-all ${paymentMethod === 'stripe' ? 'border-indigo-600 bg-indigo-50/50' : 'border-gray-200 hover:border-gray-300'}`}
+                className={`p-5 border-2 flex flex-col cursor-pointer rounded-2xl transition-all hover:shadow-md ${paymentMethod === 'stripe' ? 'border-indigo-600 bg-indigo-50/50' : 'border-gray-200'}`}
               >
                 <div className="flex items-center justify-between w-full">
                   <div className="flex items-center">
-                    <div className={`p-2 rounded-lg mr-4 ${paymentMethod === 'stripe' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-400'}`}>
+                    <div className={`p-3 rounded-xl mr-4 ${paymentMethod === 'stripe' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-400'}`}>
                       <CreditCard className="w-6 h-6" />
                     </div>
                     <div>
-                      <div className="font-bold">Credit / Debit Card (Stripe)</div>
+                      <div className="font-bold text-lg">Credit / Debit Card (Stripe)</div>
                       <div className="text-sm text-gray-500">Powered securely by Stripe</div>
                     </div>
                   </div>
@@ -199,42 +200,84 @@ const Booking = () => {
                       <input
                         type="text"
                         placeholder="Card Number"
-                        className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-indigo-600 transition-all font-mono"
                         maxLength="19"
+                        value="4242 4242 4242 4242"
+                        readOnly
                       />
                     </div>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-4">
                       <input
                         type="text"
                         placeholder="MM / YY"
-                        className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-indigo-600 transition-all font-mono"
                         maxLength="5"
+                        value="12/25"
+                        readOnly
                       />
                       <input
                         type="password"
                         placeholder="CVC"
-                        className="w-full px-4 py-2 bg-white border border-gray-200 rounded-lg outline-none focus:border-indigo-600"
+                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-indigo-600 transition-all font-mono"
                         maxLength="3"
+                        value="123"
+                        readOnly
                       />
                     </div>
+                    <p className="text-xs text-indigo-500 mt-2">* Stripe checkout will verify these details on the next page.</p>
                   </div>
                 )}
               </div>
 
               <div
                 onClick={() => setPaymentMethod('razorpay')}
-                className={`p-4 border-2 flex items-center justify-between cursor-pointer rounded-2xl transition-all ${paymentMethod === 'razorpay' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200 hover:border-gray-300'}`}
+                className={`p-5 border-2 flex items-center justify-between cursor-pointer rounded-2xl transition-all hover:shadow-md ${paymentMethod === 'razorpay' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200'}`}
               >
                 <div className="flex items-center">
-                  <div className={`p-2 rounded-lg mr-4 ${paymentMethod === 'razorpay' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400'}`}>
-                    <CreditCard className="w-6 h-6" />
+                  <div className={`p-3 rounded-xl mr-4 ${paymentMethod === 'razorpay' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400'}`}>
+                    <Wallet className="w-6 h-6" />
                   </div>
                   <div>
-                    <div className="font-bold"> Razorpay</div>
+                    <div className="font-bold text-lg">Razorpay</div>
                     <div className="text-sm text-gray-500">Fast and secure local payments</div>
                   </div>
                 </div>
                 {paymentMethod === 'razorpay' && <ShieldCheck className="w-6 h-6 text-blue-600" />}
+              </div>
+
+              <div
+                onClick={() => setPaymentMethod('upi')}
+                className={`p-5 border-2 flex flex-col cursor-pointer rounded-2xl transition-all hover:shadow-md ${paymentMethod === 'upi' ? 'border-emerald-600 bg-emerald-50/50' : 'border-gray-200'}`}
+              >
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center">
+                    <div className={`p-3 rounded-xl mr-4 ${paymentMethod === 'upi' ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-400'}`}>
+                      <Smartphone className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-lg">UPI (GPay, Paytm, PhonePe)</div>
+                      <div className="text-sm text-gray-500">Scan & Pay or UPI ID</div>
+                    </div>
+                  </div>
+                  {paymentMethod === 'upi' && <ShieldCheck className="w-6 h-6 text-emerald-600" />}
+                </div>
+
+                {paymentMethod === 'upi' && (
+                  <div className="mt-4 pt-4 border-t border-emerald-100 animate-in fade-in slide-in-from-top-2">
+                    <div className="flex items-center space-x-6 justify-center bg-white p-3 rounded-xl border border-emerald-100">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Google_Pay_Logo.svg" alt="GPay" className="h-6 w-auto opacity-70" />
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo.svg" alt="Paytm" className="h-5 w-auto opacity-70" />
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg" alt="PhonePe" className="h-6 w-auto opacity-70" />
+                    </div>
+                    <div className="mt-3">
+                       <input
+                        type="text"
+                        placeholder="Enter UPI ID (e.g., name@okicici)"
+                        className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-emerald-600 transition-all font-mono"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

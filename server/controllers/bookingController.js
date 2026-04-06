@@ -15,7 +15,7 @@ const getIO = () => {
 exports.createBooking = async (req, res) => {
     try {
         const { hotelId, roomId, checkIn, checkOut, totalPrice, paymentMethod } = req.body;
-        const isAutoPay = paymentMethod === 'razorpay';
+        const isAutoPay = ['razorpay', 'upi'].includes(paymentMethod);
 
         // Check if room is available for the dates
         const room = await Room.findById(roomId);
@@ -40,6 +40,7 @@ exports.createBooking = async (req, res) => {
             checkIn: new Date(checkIn),
             checkOut: new Date(checkOut),
             totalPrice,
+            paymentMethod,
             bookingStatus: isAutoPay ? 'Confirmed' : 'Pending',
             paymentStatus: isAutoPay ? 'Paid' : 'Unpaid'
         });
