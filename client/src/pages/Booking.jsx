@@ -202,8 +202,7 @@ const Booking = () => {
                         placeholder="Card Number"
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-indigo-600 transition-all font-mono"
                         maxLength="19"
-                        value="4242 4242 4242 4242"
-                        readOnly
+
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
@@ -212,16 +211,14 @@ const Booking = () => {
                         placeholder="MM / YY"
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-indigo-600 transition-all font-mono"
                         maxLength="5"
-                        value="12/25"
-                        readOnly
+
                       />
                       <input
                         type="password"
                         placeholder="CVC"
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-indigo-600 transition-all font-mono"
                         maxLength="3"
-                        value="123"
-                        readOnly
+
                       />
                     </div>
                     <p className="text-xs text-indigo-500 mt-2">* Stripe checkout will verify these details on the next page.</p>
@@ -270,7 +267,7 @@ const Booking = () => {
                       <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg" alt="PhonePe" className="h-6 w-auto opacity-70" />
                     </div>
                     <div className="mt-3">
-                       <input
+                      <input
                         type="text"
                         placeholder="Enter UPI ID (e.g., name@okicici)"
                         className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-emerald-600 transition-all font-mono"
